@@ -23,7 +23,7 @@ const sortOptions: FilterOption[] = [
 
 export function MealFilters() {
   return (
-    <div className="bg-white shadow-sm">
+    <div className="bg-white shadow-sm border-t border-l border-r rounded-t-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-col sm:flex-row items-center gap-4">
           <div className="w-full sm:w-96 relative">

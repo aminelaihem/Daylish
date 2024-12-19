@@ -11,9 +11,11 @@ interface MealCardProps {
     reviewCount: number;
     isVerified: boolean;
   };
+  isLoggedIn?: boolean;
+  onOrderClick?: () => void;
 }
 
-export function MealCard({ meal, chef }: MealCardProps) {
+export function MealCard({ meal, chef, isLoggedIn = false, onOrderClick }: MealCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="relative h-48">
@@ -80,6 +82,19 @@ export function MealCard({ meal, chef }: MealCardProps) {
             </span>
           </div>
         </div>
+
+        <button
+          onClick={onOrderClick}
+          disabled={!isLoggedIn}
+          className={`
+            w-full mt-4 py-2 px-4 rounded-full font-medium
+            ${isLoggedIn 
+              ? 'bg-orange-600 text-white hover:bg-orange-700' 
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed'}
+          `}
+        >
+          {isLoggedIn ? 'Commander' : 'Connectez-vous pour commander'}
+        </button>
       </div>
     </div>
   );
