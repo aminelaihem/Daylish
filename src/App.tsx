@@ -10,6 +10,8 @@ import { Catalogue } from './components/layout/Catalogue';
 import { Login } from './components/auth/Login';
 import { Register } from './components/auth/Register';
 import { Profile } from './components/auth/Profile';
+import { OrderConfirmation } from './components/order/OrderConfirmation';
+import { OrderSuccess } from './components/order/OrderSuccess';
 
 function App() {
   return (
@@ -29,10 +31,14 @@ function App() {
           {/* Page Catalogue */}
           <Route path="/catalogue" element={<Catalogue />} />
           
-          {/* Ajoute d'autres routes ici */}
+          {/* Routes d'authentification */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
+
+          {/* Routes de commande */}
+          <Route path="/order/:id" element={<OrderConfirmation />} />
+          <Route path="/order-success" element={<OrderSuccess />} />
         </Routes>
       </div>
     </Router>
