@@ -8,7 +8,7 @@ const SAMPLE_MEALS: Meal[] = [
     chefId: '1',
     title: 'Couscous Royal Fait Maison',
     description: 'Un délicieux couscous traditionnel avec légumes frais et viandes variées',
-    price: 15,
+    price: 10,
     image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&q=80&w=800',
     ingredients: ['Semoule', 'Légumes', 'Agneau', 'Poulet', 'Merguez'],
     allergens: ['Gluten'],
@@ -22,12 +22,12 @@ const SAMPLE_MEALS: Meal[] = [
     chefId: '2',
     title: 'Lasagnes Végétariennes',
     description: 'Lasagnes aux légumes de saison et fromage italien',
-    price: 12,
+    price: 9,
     image: 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?auto=format&fit=crop&q=80&w=800',
     ingredients: ['Pâtes', 'Légumes', 'Fromage', 'Sauce tomate'],
     allergens: ['Gluten', 'Lactose'],
     category: 'Végétarien',
-    preparationTime: 60,
+    preparationTime: 30,
     availablePortions: 6,
     distance: 0.8
   }
