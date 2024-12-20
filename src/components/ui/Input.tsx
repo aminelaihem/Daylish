@@ -1,45 +1,55 @@
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  icon?: LucideIcon;
-  error?: string;
   label?: string;
+  error?: string;
+  icon?: React.ReactNode;
+  helperText?: string;
 }
 
 export function Input({
-  icon: Icon,
-  error,
   label,
+  error,
+  icon,
+  helperText,
   className = '',
   ...props
 }: InputProps) {
   return (
-    <div className="w-full">
+    <div className="space-y-1">
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-700">
           {label}
         </label>
       )}
+      
       <div className="relative">
-        {Icon && (
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-            <Icon className="h-5 w-5" />
+        {icon && (
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <span className="text-gray-400">{icon}</span>
           </div>
         )}
+        
         <input
           className={`
-            w-full rounded-lg border border-gray-300 
-            ${Icon ? 'pl-10' : 'pl-4'} pr-4 py-2
-            focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent
-            ${error ? 'border-red-500' : ''}
+            w-full rounded-lg border
+            ${icon ? 'pl-10' : 'pl-4'}
+            ${error 
+              ? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500' 
+              : 'border-gray-300 focus:ring-orange-500 focus:border-orange-500'
+            }
             ${className}
           `}
           {...props}
         />
       </div>
+
       {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
+        <p className="text-sm text-red-600">{error}</p>
+      )}
+
+      {helperText && !error && (
+        <p className="text-sm text-gray-500">{helperText}</p>
       )}
     </div>
   );

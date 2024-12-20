@@ -14,7 +14,7 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <ChefHat className="h-8 w-8 text-orange-500" />
-              <span className="text-xl font-bold text-white">CuisineConnect</span>
+              <span className="text-xl font-bold text-white">Saveurs d’À Côté</span>
             </div>
             <p className="text-sm text-gray-400">
               Connectez-vous avec des chefs passionnés près de chez vous et découvrez des plats faits maison authentiques.
@@ -112,7 +112,7 @@ export function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm text-gray-400">
-              © {currentYear} CuisineConnect. Tous droits réservés.
+              © {currentYear} Saveurs d’À Côté. Tous droits réservés.
             </p>
             <div className="flex space-x-6">
               <a href="#" className="text-sm text-gray-400 hover:text-orange-500 transition-colors">

@@ -35,6 +35,7 @@ const SAMPLE_MEALS: Meal[] = [
 
 const SAMPLE_CHEFS = {
   '1': {
+    id: '1',
     name: 'Marie Laurent',
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200',
     rating: 4.8,
@@ -42,6 +43,7 @@ const SAMPLE_CHEFS = {
     isVerified: true
   },
   '2': {
+    id: '2',
     name: 'Thomas Martin',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200',
     rating: 4.6,

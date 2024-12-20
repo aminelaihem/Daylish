@@ -16,7 +16,7 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: '1',
-    content: "Grâce à CuisineConnect, j'ai pu transformer ma passion pour la cuisine en une activité rémunératrice. Les retours positifs de mes clients sont ma plus belle récompense !",
+    content: "Grâce à Saveurs d’À Côté, j'ai pu transformer ma passion pour la cuisine en une activité rémunératrice. Les retours positifs de mes clients sont ma plus belle récompense !",
     author: {
       name: "Sophie Martin",
       role: "chef",

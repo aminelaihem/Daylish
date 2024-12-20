@@ -21,7 +21,7 @@ export function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
             <ChefHat className="h-8 w-8 text-orange-600" />
-            <span className="text-xl font-bold text-gray-900">CuisineConnect</span>
+            <span className="text-xl font-bold text-gray-900">Saveurs d’À Côté</span>
           </Link>
 
           {/* Navigation centrale */}
