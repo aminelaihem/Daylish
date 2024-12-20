@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { User, ChefHat, Upload, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import type { Location } from '../../types';
+import type { Location } from '../../types/index';
 
 interface RegisterForm {
   userType: 'consumer' | 'chef' | null;

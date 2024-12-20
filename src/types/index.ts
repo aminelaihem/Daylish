@@ -1,38 +1,13 @@
-// User related types
-export interface UserBase {
+// Types utilisateur
+export interface User {
   id: string;
   name: string;
   email: string;
   avatar: string;
-  location: Location;
+  role: 'consumer' | 'chef';
 }
 
-export interface Chef extends UserBase {
-  role: 'chef';
-  bio: string;
-  rating: number;
-  reviewCount: number;
-  isVerified: boolean;
-  specialties: string[];
-}
-
-export interface Consumer extends UserBase {
-  role: 'consumer';
-  favorites: string[];
-}
-
-export type User = Chef | Consumer;
-
-// Location types
-export interface Location {
-  latitude: number;
-  longitude: number;
-  address: string;
-  city: string;
-  postalCode: string;
-}
-
-// Meal related types
+// Type pour les plats
 export interface Meal {
   id: string;
   chefId: string;
@@ -48,29 +23,31 @@ export interface Meal {
   distance?: number;
 }
 
-// Order related types
+// Type pour les chefs
+export interface Chef {
+  id: string;
+  name: string;
+  avatar: string;
+  rating: number;
+  reviewCount: number;
+  isVerified: boolean;
+}
+
+// Type pour les commandes
 export interface Order {
   id: string;
   mealId: string;
-  consumerId: string;
+  userId: string;
   chefId: string;
-  status: OrderStatus;
-  createdAt: string;
-  pickupTime: string;
+  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   price: number;
-  rating?: Rating;
+  createdAt: string;
 }
 
-export type OrderStatus = 'pending' | 'confirmed' | 'ready' | 'completed' | 'cancelled';
-
-// Rating related types
-export interface Rating {
-  id: string;
-  orderId: string;
-  consumerId: string;
-  chefId: string;
-  mealId: string;
-  score: number;
-  comment: string;
-  createdAt: string;
+export interface Location {
+  latitude: number;
+  longitude: number;
+  address: string;
+  city: string;
+  postalCode: string;
 }
