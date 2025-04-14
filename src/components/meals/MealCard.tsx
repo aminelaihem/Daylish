@@ -1,7 +1,8 @@
 import React from 'react';
 import { Star, Clock, AlertCircle, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import type { Meal, Chef } from '../../types';
+import type { Meal } from '@/types/meal';
+import type { Chef } from '@/types/chef';
 
 interface MealCardProps {
   meal: Meal;

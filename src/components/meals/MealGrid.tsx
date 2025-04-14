@@ -1,6 +1,7 @@
 import React from 'react';
 import { MealCard } from './MealCard';
-import type { Meal } from '../../types';
+import type { Meal } from '@/types/meal';
+import type { Chef } from '@/types/chef';
 
 const SAMPLE_MEALS: Meal[] = [
   {
