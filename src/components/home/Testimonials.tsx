@@ -51,41 +51,48 @@ const testimonials: Testimonial[] = [
 
 export function Testimonials() {
   return (
-    <section className="py-20 bg-deep-green">
+    <section className="py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="section-title font-blatant-bold text-4xl text-beige">Ils partagent leur expérience</h2>
-          <p className="mt-4 text-xl text-beige/80 font-blatant max-w-3xl mx-auto">La communauté Daylish témoigne.</p>
+          <h2 className="section-title text-deep-green">Ils partagent leur expérience</h2>
+          <p className="mt-4 text-xl text-deep-green/80 font-blatant max-w-3xl mx-auto">
+            La communauté Daylish témoigne.
+          </p>
         </div>
         
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-8 md:gap-10 lg:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.id}
-              className={`card bg-beige p-8 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-[1.03] border border-deep-green-light/20 ${index === 1 ? 'lg:scale-105 lg:shadow-xl' : ''}`}
+              className={`card p-8 flex flex-col relative border-t-4 ${ index === 1 ? 'border-deep-green-light' : 'border-yellow' }`}
             >
-              <div className="flex items-center space-x-1 text-yellow mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-5 w-5 ${i < testimonial.rating ? 'fill-current' : 'stroke-current fill-none'}`}
+              <p className="text-lg text-deep-green font-blatant italic mb-6 flex-grow relative">
+                 <span className="absolute -top-4 -left-4 text-6xl text-deep-green/10 font-serif">“</span>
+                 {testimonial.content}
+              </p>
+              
+              <div className="mt-auto">
+                <div className="flex items-center space-x-1 text-yellow mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-5 w-5 ${i < testimonial.rating ? 'fill-yellow' : 'stroke-yellow fill-none'}`}
+                      strokeWidth={1.5} 
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center">
+                  <img
+                    src={testimonial.author.avatar}
+                    alt={testimonial.author.name}
+                    className="h-12 w-12 rounded-full object-cover ring-2 ring-beige"
                   />
-                ))}
-              </div>
-              
-              <p className="text-base text-deep-green/90 font-blatant italic mb-6">"{testimonial.content}"</p>
-              
-              <div className="flex items-center border-t border-deep-green-light/20 pt-6">
-                <img
-                  src={testimonial.author.avatar}
-                  alt={testimonial.author.name}
-                  className="h-12 w-12 rounded-full object-cover ring-2 ring-deep-green-light/50"
-                />
-                <div className="ml-4">
-                  <h4 className="text-lg font-blatant-bold text-deep-green">{testimonial.author.name}</h4>
-                  <p className="text-sm text-deep-green/70 font-blatant">
-                    {testimonial.author.role === 'chef' ? 'Chef Partenaire' : 'Client Gourmand'} · {testimonial.author.location}
-                  </p>
+                  <div className="ml-4">
+                    <h4 className="text-lg font-blatant-bold text-deep-green">{testimonial.author.name}</h4>
+                    <p className="text-sm text-deep-green/70 font-blatant">
+                      {testimonial.author.role === 'chef' ? 'Chef Partenaire' : 'Client Gourmand'} · {testimonial.author.location}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

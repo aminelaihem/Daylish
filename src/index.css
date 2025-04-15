@@ -26,8 +26,50 @@
     font-style: normal;
     font-display: swap;
   }
+  
+  /* Styles de base améliorés */
+  body {
+    @apply bg-beige text-deep-green font-blatant antialiased leading-relaxed;
+    /* antialiased pour un rendu de police plus doux */
+    /* leading-relaxed pour un meilleur interligne par défaut */
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    /* Appliquer la graisse bold par défaut aux titres */
+    @apply font-blatant-bold;
+  }
 }
 
 :root {
   --color-deep-green: #006B60;
+  --color-deep-green-light: #06D6A0;
+  --color-beige: #FFEDCB;
+  --color-orange: #FF7357;
+  --color-yellow: #FFC255;
+}
+
+@layer components {
+  .btn-primary {
+    /* Bouton principal : Vert Foncé / Texte Beige */
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-blatant-bold bg-deep-green text-beige shadow-md hover:bg-opacity-90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green-light focus:ring-offset-beige transition-all duration-200 transform active:scale-[0.98];
+    /* Ajout : focus states, taille py-3, active state */
+  }
+  
+  .btn-secondary {
+    /* Bouton secondaire : Vert Clair / Texte Vert Foncé */
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-blatant-bold bg-deep-green-light text-deep-green shadow-md hover:bg-opacity-90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green focus:ring-offset-beige transition-all duration-200 transform active:scale-[0.98];
+    /* Ajout : focus states, taille py-3, active state */
+  }
+  
+  .card {
+    /* Carte par défaut : Fond Blanc, ombre douce */
+    @apply bg-white rounded-xl shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:shadow-xl;
+    /* Arrondi plus doux (xl), ombre lg hover xl */
+  }
+  
+  .section-title {
+    /* Titre de section : Grande taille, couleur gérée dans le composant */
+    @apply text-4xl md:text-5xl font-blatant-bold mb-6 text-center;
+    /* Taille augmentée, mb-6, text-center par défaut */
+  }
 }

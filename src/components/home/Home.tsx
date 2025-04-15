@@ -73,14 +73,14 @@ const sampleChefs = {
 
 export function Home() {
   return (
-    <div className="min-h-screen bg-beige">
+    <div className="min-h-screen">
       <Hero />
       
-      {/* Section Plats Populaires */}
+      {/* Section Plats Populaires - Fond: Beige (par défaut) */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-12">
-            <h2 className="section-title font-blatant-bold text-4xl text-deep-green">Les pépites du quartier</h2>
+            <h2 className="section-title text-deep-green">Les pépites du quartier</h2>
             <Link 
               to="/catalogue" 
               className="text-deep-green-light font-blatant-bold hover:underline flex items-center group"
@@ -105,11 +105,11 @@ export function Home() {
       <Benefits />
       <Testimonials />
       
-      {/* Section Appel à l'Action - Chef */}
-      <section className="py-20 bg-gradient-to-br from-deep-green-light/10 to-beige">
+      {/* Section Appel à l'Action - Chef - Fond: Vert Foncé */}
+      <section className="py-20 bg-deep-green">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-blatant-bold text-deep-green mb-4">Partagez votre passion culinaire</h2>
-          <p className="text-xl text-deep-green/80 font-blatant mb-10 max-w-2xl mx-auto">
+          <h2 className="text-4xl font-blatant-bold text-beige mb-4">Partagez votre passion culinaire</h2>
+          <p className="text-xl text-beige/80 font-blatant mb-10 max-w-2xl mx-auto">
             Rejoignez notre réseau de chefs passionnés et transformez votre cuisine en source de revenus et de rencontres.
           </p>
           <Link

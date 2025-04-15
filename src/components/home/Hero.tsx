@@ -4,41 +4,46 @@ import { Link } from 'react-router-dom';
 
 export function Hero() {
   return (
-    <div className="relative bg-gradient-to-b from-deep-green to-deep-green/90 pt-40 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Éléments décoratifs (optionnels) */}
-      <div className="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 w-96 h-96 bg-deep-green-light/10 rounded-full blur-3xl opacity-50"></div>
-      <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-80 h-80 bg-orange/10 rounded-full blur-3xl opacity-40"></div>
+    <div className="relative bg-deep-green pt-48 pb-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Éléments décoratifs */}
+      <div className="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 w-96 h-96 bg-deep-green-light/5 rounded-full blur-3xl opacity-50" aria-hidden="true"></div>
+      <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-80 h-80 bg-yellow/5 rounded-full blur-3xl opacity-40" aria-hidden="true"></div>
 
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center">
-          <h1 className="text-5xl font-vogue tracking-tight text-beige sm:text-6xl md:text-7xl leading-tight">
+          {/* Utilisation de font-vogue pour le titre principal */}
+          <h1 className="text-6xl font-vogue tracking-tight text-beige sm:text-7xl md:text-8xl leading-none">
             <span className="block">Saveurs d'ici,</span>
-            <span className="block text-deep-green-light mt-2">cuisinées pour vous</span>
+            <span className="block text-deep-green-light mt-1">cuisinées pour vous</span>
           </h1>
-          <p className="mt-6 max-w-xl mx-auto text-lg text-beige/90 font-blatant sm:text-xl md:mt-8 md:text-2xl">
+          {/* Texte d'intro avec police Blatant, plus lisible */}
+          <p className="mt-8 max-w-xl mx-auto text-xl text-beige/90 font-blatant sm:text-2xl md:mt-10">
             Explorez une variété de plats authentiques, mijotés avec passion par les talents culinaires de votre voisinage.
           </p>
-          <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4">
-            <Link
-              to="/register"
-              className="btn-secondary inline-flex items-center justify-center px-8 py-3 text-lg font-blatant-bold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
-            >
-              <ChefHat className="mr-2 h-6 w-6" />
-              Devenir Chef Partenaire
-            </Link>
+          {/* Boutons avec plus d'espace */}
+          <div className="mt-14 flex flex-col sm:flex-row justify-center gap-5">
             <Link
               to="/catalogue"
-              className="btn-primary inline-flex items-center justify-center px-8 py-3 text-lg font-blatant-bold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 bg-beige text-deep-green hover:bg-beige/90"
+              // Utilisation de btn-primary mais avec couleur spécifique jaune
+              className="btn-primary bg-yellow text-deep-green hover:bg-yellow/90 focus:ring-yellow/50 text-base px-8 py-4"
             >
-              <Search className="mr-2 h-6 w-6" />
+              <Search className="mr-3 h-5 w-5" />
               Trouver un plat
+            </Link>
+            <Link
+              to="/register"
+              // Bouton secondaire beige
+              className="inline-flex items-center justify-center px-8 py-4 text-base font-blatant-bold rounded-lg shadow-md transform hover:scale-105 transition-all duration-300 bg-beige text-deep-green hover:bg-beige/90 border border-deep-green/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-beige focus:ring-offset-deep-green"
+            >
+              <ChefHat className="mr-3 h-5 w-5" />
+              Devenir Chef Partenaire
             </Link>
           </div>
         </div>
       </div>
       
-      {/* Transition douce vers la suite */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-beige to-transparent"></div>
+      {/* Transition douce améliorée */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-beige via-beige/80 to-transparent" aria-hidden="true"></div>
     </div>
   );
 }
