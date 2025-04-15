@@ -117,17 +117,17 @@ export function Home() {
       </section>
       
       {/* Section Appel à l'Action - Chef - Fond: Beige (par défaut) */}
-      <section className="py-24">
-         {/* Conteneur de la carte CTA */}
-         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Cohérence du padding vertical */}
+      <section className="py-20">
+         {/* Cohérence de la largeur max et des marges horizontales/padding latéraux */}
+         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* La "carte" CTA avec fond Vert Foncé */}
-            <div className="bg-deep-green rounded-2xl shadow-xl px-8 py-12 sm:p-16 text-center">
-                 {/* Contenu texte sur fond vert foncé -> beige */}
+            {/* Cohérence du padding interne (légèrement plus grand pour l'emphase) */}
+            <div className="bg-deep-green rounded-2xl shadow-xl px-8 py-12 md:p-12 text-center">
                  <h2 className="text-4xl md:text-5xl font-blatant-bold text-beige mb-5">Partagez votre passion culinaire</h2>
                  <p className="text-xl text-beige/80 font-blatant mb-12 max-w-2xl mx-auto leading-relaxed">
                      Rejoignez notre réseau de chefs passionnés et transformez votre cuisine en source de revenus et de rencontres.
                  </p>
-                 {/* Bouton sur fond vert foncé -> Secondaire (vert clair/vert foncé) */}
                  <Link
                      to="/register"
                      className="btn-secondary px-10 py-4 text-lg"
