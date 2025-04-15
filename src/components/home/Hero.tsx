@@ -24,16 +24,15 @@ export function Hero() {
           <div className="mt-14 flex flex-col sm:flex-row justify-center gap-5">
             <Link
               to="/catalogue"
-              // Utilisation de btn-primary mais avec couleur spécifique jaune
-              className="btn-primary bg-yellow text-deep-green hover:bg-yellow/90 focus:ring-yellow/50 text-base px-8 py-4"
+              // Ajout des classes transform, transition, active, shadow etc. pour la cohérence
+              className="btn-primary inline-flex items-center justify-center px-8 py-4 text-base font-blatant-bold rounded-lg shadow-md bg-yellow text-deep-green hover:bg-yellow/90 focus:ring-yellow/50 transform hover:scale-105 active:scale-[0.98] transition-all duration-200 focus:ring-offset-deep-green"
             >
               <Search className="mr-3 h-5 w-5" />
               Trouver un plat
             </Link>
             <Link
               to="/register"
-              // Bouton secondaire beige
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-blatant-bold rounded-lg shadow-md transform hover:scale-105 transition-all duration-300 bg-beige text-deep-green hover:bg-beige/90 border border-deep-green/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-beige focus:ring-offset-deep-green"
+              className="inline-flex items-center justify-center px-8 py-4 text-base font-blatant-bold rounded-lg shadow-md transform hover:scale-105 transition-all duration-300 bg-beige text-deep-green hover:bg-beige/90 border border-deep-green/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-beige focus:ring-offset-deep-green active:scale-[0.98]"
             >
               <ChefHat className="mr-3 h-5 w-5" />
               Devenir Chef Partenaire
