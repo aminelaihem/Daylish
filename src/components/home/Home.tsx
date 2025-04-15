@@ -73,6 +73,7 @@ const sampleChefs = {
 
 export function Home() {
   return (
+    // Fond global implicite via body (bg-beige)
     <div className="min-h-screen">
       <Hero />
       
@@ -80,45 +81,61 @@ export function Home() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-12">
-            <h2 className="section-title text-deep-green">Les pépites du quartier</h2>
+            <h2 className="section-title text-deep-green text-left">Les pépites du quartier</h2>
             <Link 
               to="/catalogue" 
-              className="text-deep-green-light font-blatant-bold hover:underline flex items-center group"
+              className="text-deep-green-light font-blatant-bold hover:underline flex items-center group flex-shrink-0 ml-6"
             >
               Voir tous les plats
               <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
           
+          {/* Cartes avec fond blanc cassé */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {popularMeals.map((meal) => (
-              <MealCard 
-                key={meal.id} 
-                meal={meal} 
-                chef={sampleChefs[meal.chefId as keyof typeof sampleChefs]}
-              />
+              // Wrapper appliquant le style .card et le fond
+              <div key={meal.id} className="card bg-soft-white">
+                <MealCard 
+                  meal={meal} 
+                  chef={sampleChefs[meal.chefId as keyof typeof sampleChefs]}
+                />
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <Benefits />
-      <Testimonials />
+      {/* Section Benefits - Fond: Beige (par défaut) */}
+      <section className="py-20">
+        <Benefits /> 
+      </section>
       
-      {/* Section Appel à l'Action - Chef - Fond: Vert Foncé */}
-      <section className="py-20 bg-deep-green">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-blatant-bold text-beige mb-4">Partagez votre passion culinaire</h2>
-          <p className="text-xl text-beige/80 font-blatant mb-10 max-w-2xl mx-auto">
-            Rejoignez notre réseau de chefs passionnés et transformez votre cuisine en source de revenus et de rencontres.
-          </p>
-          <Link
-            to="/register"
-            className="btn-secondary inline-flex items-center justify-center px-10 py-4 text-xl font-blatant-bold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
-          >
-            Devenir Chef Partenaire
-          </Link>
-        </div>
+      {/* Section Testimonials - Fond: Beige (par défaut) */}
+      <section className="py-20">
+        <Testimonials />
+      </section>
+      
+      {/* Section Appel à l'Action - Chef - Fond: Beige (par défaut) */}
+      <section className="py-24">
+         {/* Conteneur de la carte CTA */}
+         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* La "carte" CTA avec fond Vert Foncé */}
+            <div className="bg-deep-green rounded-2xl shadow-xl px-8 py-12 sm:p-16 text-center">
+                 {/* Contenu texte sur fond vert foncé -> beige */}
+                 <h2 className="text-4xl md:text-5xl font-blatant-bold text-beige mb-5">Partagez votre passion culinaire</h2>
+                 <p className="text-xl text-beige/80 font-blatant mb-12 max-w-2xl mx-auto leading-relaxed">
+                     Rejoignez notre réseau de chefs passionnés et transformez votre cuisine en source de revenus et de rencontres.
+                 </p>
+                 {/* Bouton sur fond vert foncé -> Secondaire (vert clair/vert foncé) */}
+                 <Link
+                     to="/register"
+                     className="btn-secondary px-10 py-4 text-lg"
+                 >
+                     Devenir Chef Partenaire
+                 </Link>
+            </div>
+         </div>
       </section>
     </div>
   );
