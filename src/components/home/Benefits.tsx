@@ -9,44 +9,42 @@ interface Benefit {
 
 const benefits: Benefit[] = [
   {
-    icon: <Utensils className="h-8 w-8 text-orange-500" />,
-    title: "Mangez sainement",
-    description: "Des plats faits maison avec des ingrédients frais et de qualité, préparés avec passion."
+    icon: <Utensils className="h-10 w-10 text-deep-green" />,
+    title: "Mangez authentique",
+    description: "Savourez des plats mijotés avec des ingrédients frais, loin des standards industriels."
   },
   {
-    icon: <Heart className="h-8 w-8 text-orange-500" />,
-    title: "Valorisez votre talent culinaire",
-    description: "Partagez vos recettes et générez un revenu complémentaire grâce à votre passion."
+    icon: <Heart className="h-10 w-10 text-deep-green" />,
+    title: "Valorisez votre passion",
+    description: "Monétisez votre talent en partageant vos spécialités culinaires avec votre communauté."
   },
   {
-    icon: <Users className="h-8 w-8 text-orange-500" />,
-    title: "Créez du lien localement",
-    description: "Rencontrez vos voisins et participez à la création d'une communauté culinaire locale."
+    icon: <Users className="h-10 w-10 text-deep-green" />,
+    title: "Tissez des liens",
+    description: "Renforcez les liens de voisinage autour de la passion commune de la bonne cuisine."
   }
 ];
 
 export function Benefits() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-beige">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900">Pourquoi choisir Saveurs d’À Côté ?</h2>
-          <p className="mt-4 text-lg text-gray-600">Découvrez les avantages de notre plateforme</p>
+        <div className="text-center mb-16">
+          <h2 className="section-title font-blatant-bold text-4xl text-deep-green">Pourquoi Daylish ?</h2>
+          <p className="mt-4 text-xl text-deep-green/80 font-blatant max-w-3xl mx-auto">Rejoignez une communauté gourmande et solidaire.</p>
         </div>
         
-        <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="relative p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
+              className="card text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-deep-green-light/10"
             >
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 p-3 bg-orange-50 rounded-full">
+              <div className="inline-flex p-4 bg-deep-green-light/10 rounded-full mb-6">
                 {benefit.icon}
               </div>
-              <div className="mt-8 text-center">
-                <h3 className="text-xl font-semibold text-gray-900">{benefit.title}</h3>
-                <p className="mt-4 text-gray-600">{benefit.description}</p>
-              </div>
+              <h3 className="text-2xl font-blatant-bold text-deep-green mb-3">{benefit.title}</h3>
+              <p className="text-base text-deep-green/80 font-blatant">{benefit.description}</p>
             </div>
           ))}
         </div>

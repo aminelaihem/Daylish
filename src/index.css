@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Vogue';
+    src: url('./assets/fonts/Vogue.woff2') format('woff2'); /* Adaptez le format si nécessaire */
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Blatant Bold';
+    src: url('./assets/fonts/Blatant-Bold.woff2') format('woff2'); /* Adaptez le format si nécessaire */
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Blatant Regular';
+    src: url('./assets/fonts/Blatant-Regular.woff2') format('woff2'); /* Adaptez le format si nécessaire */
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+}
+
+:root {
+  --color-deep-green: #006B60;
+}
