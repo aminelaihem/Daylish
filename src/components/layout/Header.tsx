@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu as MenuIcon, X, User, LogOut, ChefHat, ShoppingBag, ArrowRight } from 'lucide-react';
+import { Menu as MenuIcon, X, User, LogOut, ChefHat, ShoppingBag, ArrowRight, LogIn } from 'lucide-react';
 import { Menu, Transition } from '@headlessui/react'; // Pour le dropdown Desktop
 import { motion, AnimatePresence } from 'framer-motion'; // Pour l'animation du menu mobile
 
@@ -40,14 +40,19 @@ function useScrollPosition() {
 const NavLink = ({ to, children, isScrolled }: { to: string; children: React.ReactNode, isScrolled: boolean }) => {
   const location = useLocation();
   const isActive = location.pathname === to;
+  const textColor = isScrolled ? 'text-deep-green/80 group-hover:text-deep-green' : 'text-white/80 group-hover:text-white';
+  const activeTextColor = isScrolled ? 'text-deep-green' : 'text-white';
+  const capsuleBg = isScrolled ? 'bg-deep-green/5 group-hover:bg-deep-green/10' : 'bg-white/5 group-hover:bg-white/10';
+  const activeCapsuleBg = isScrolled ? 'bg-deep-green/10' : 'bg-white/15';
+
   return (
     <Link
       to={to}
-      className={`relative px-3 py-2 text-sm font-medium rounded-full transition-colors duration-200 group ${isScrolled ? 'text-deep-green/70 hover:text-deep-green' : 'text-white/80 hover:text-white'}`}
+      className={`relative px-4 py-1.5 text-sm font-medium rounded-full transition-colors duration-200 group ${isActive ? activeTextColor : textColor}`}
     >
       <span className="relative z-10">{children}</span>
       <span 
-        className={`absolute inset-0 rounded-full transition-all duration-300 ease-out ${isActive ? 'bg-deep-green/10' : 'bg-deep-green/0 scale-x-0 group-hover:scale-x-100 group-hover:bg-deep-green/10'}`}
+        className={`absolute inset-0 rounded-full transition-all duration-300 ease-out transform ${isActive ? activeCapsuleBg : capsuleBg + ' scale-x-0 group-hover:scale-x-100'}`}
         style={{ transformOrigin: 'center' }}
       />
     </Link>
@@ -91,6 +96,10 @@ export function Header() {
 
   const isScrolled = scrollPosition > 20; // Seuil légèrement augmenté
 
+  // Couleur de texte adaptative pour les boutons/icones selon le scroll
+  const adaptiveTextColor = isScrolled ? 'text-deep-green' : 'text-white';
+  const adaptiveHoverBg = isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/10';
+
   return (
     <>
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isScrolled ? 'h-16 shadow-md bg-white/90 backdrop-blur-lg' : 'h-24 bg-transparent'}`}>
@@ -113,14 +122,15 @@ export function Header() {
                 {isLoggedIn ? (
                   <Menu as="div" className="relative inline-block text-left">
                     <div>
-                      <Menu.Button className="flex items-center space-x-2 p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green-light transition-colors group">
+                      <Menu.Button className={`flex items-center space-x-2 p-1 rounded-full ${adaptiveHoverBg} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green-light transition-colors group`}>
                         <span className="sr-only">Ouvrir le menu utilisateur</span>
                         <img
                           src={user.avatar || 'https://via.placeholder.com/150'}
                           alt=""
-                          className={`h-9 w-9 rounded-full object-cover ring-2 ring-offset-1 transition-all duration-200 ${isScrolled ? 'ring-deep-green/30 group-hover:ring-deep-green-light' : 'ring-white/30 group-hover:ring-white'}`}
+                          className={`h-9 w-9 rounded-full object-cover ring-2 ring-offset-1 transition-all duration-300 ${isScrolled ? 'ring-deep-green/20 group-hover:ring-deep-green-light' : 'ring-white/20 group-hover:ring-white'}`}
                         />
-                        <span className={`text-sm font-medium transition-colors ${isScrolled ? 'text-deep-green/90' : 'text-white/90'} group-hover:text-deep-green hidden lg:inline`}>{user.name}</span>
+                         {/* Nom caché sur écrans moyens pour laisser place aux boutons */} 
+                        <span className={`text-sm font-medium ${adaptiveTextColor} group-hover:${isScrolled ? 'text-deep-green' : 'text-white'} hidden lg:inline transition-colors`}>{user.name}</span>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -151,16 +161,19 @@ export function Header() {
                   <div className="flex items-center space-x-3">
                     <Link 
                       to="/login" 
-                      className={`px-4 py-2 text-sm font-medium rounded-lg border border-transparent transition-all duration-200 ease-out ${isScrolled ? 'text-deep-green hover:border-deep-green/30 hover:bg-deep-green/5' : 'text-white/80 hover:border-white/30 hover:bg-white/10'}`}
+                      className={`group relative flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-transparent transition-all duration-200 ease-out ${isScrolled ? 'text-deep-green/80 hover:text-deep-green hover:bg-deep-green/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
                     >
+                       <LogIn className={`mr-1.5 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${isScrolled ? 'text-deep-green/60' : 'text-white/60'}`} />
                       Se connecter
                     </Link>
                     <Link 
                        to="/register" 
-                       className="group inline-flex items-center px-5 py-2 text-sm font-bold rounded-lg bg-gradient-to-r from-yellow to-orange-400 text-deep-green shadow-md hover:shadow-lg hover:shadow-yellow/30 hover:brightness-110 transform hover:scale-[1.03] transition-all duration-200 ease-out"
+                       className="group relative inline-flex items-center px-5 py-2 text-sm font-bold rounded-lg overflow-hidden bg-gradient-to-r from-yellow to-orange-400 text-deep-green shadow-md hover:shadow-lg hover:shadow-yellow/30 transform hover:scale-[1.03] active:scale-[0.99] transition-all duration-200 ease-out"
                     >
-                      S'inscrire
-                      <ArrowRight className="ml-1.5 h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-0.5" />
+                       {/* Effet Shimmer (pseudo-élément pourrait être mieux, mais utilisons un dégradé animé pour la simplicité) */}
+                       <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out opacity-50 group-hover:opacity-100"></span>
+                       <span className="relative z-10">S'inscrire</span>
+                       <ArrowRight className="ml-1.5 h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-1 relative z-10" />
                     </Link>
                   </div>
                 )}
@@ -168,10 +181,21 @@ export function Header() {
                  {isLoggedIn && user.role !== 'chef' && (
                    <Link 
                      to="/register?role=chef" 
-                     className={`group ml-4 px-4 py-2 text-sm font-medium rounded-lg border transition-all duration-300 ease-out ${isScrolled ? 'border-deep-green text-deep-green hover:bg-deep-green hover:text-white hover:shadow-md' : 'border-white/50 text-white/90 hover:bg-white/10 hover:border-white'}`}
+                     className={`group relative ml-4 px-4 py-2 text-sm font-medium rounded-lg border overflow-hidden transition-all duration-300 ease-out 
+                       ${isScrolled 
+                         ? 'border-deep-green text-deep-green hover:text-white' 
+                         : 'border-white/50 text-white/90 hover:text-deep-green hover:border-deep-green'}`}
                     >
-                     <ChefHat className="inline h-4 w-4 mr-1.5 -mt-px transition-transform duration-300 ease-in-out group-hover:rotate-[-12deg]" />
-                     Devenir Chef
+                      {/* Fond animé au survol */}
+                      <span className={`absolute inset-0 w-full h-full transition-colors duration-300 ease-out 
+                        ${isScrolled 
+                          ? 'bg-deep-green opacity-0 group-hover:opacity-100' 
+                          : 'bg-white opacity-0 group-hover:opacity-10 group-hover:bg-deep-green group-hover:opacity-100'}`}>
+                      </span>
+                      <span className="relative flex items-center">
+                         <ChefHat className="inline h-4 w-4 mr-1.5 -mt-px transition-transform duration-300 ease-in-out group-hover:rotate-[-12deg]" />
+                         Devenir Chef
+                      </span>
                    </Link>
                 )}
               </div>
@@ -180,14 +204,11 @@ export function Header() {
               <div className="md:hidden ml-3">
                  <button
                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                   className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-deep-green-light transition-colors ${isScrolled ? 'text-deep-green hover:bg-gray-100' : 'text-white/90 hover:bg-white/10'}`}
+                   className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-deep-green-light transition-colors ${adaptiveTextColor} ${adaptiveHoverBg}`}
                    aria-expanded={isMobileMenuOpen}
                  >
                    <span className="sr-only">Ouvrir menu</span>
-                   <motion.div
-                      animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
-                      transition={{ duration: 0.2 }}
-                   >
+                   <motion.div animate={{ rotate: isMobileMenuOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
                      {isMobileMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
                    </motion.div>
                  </button>
