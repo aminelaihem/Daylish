@@ -46,7 +46,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-deep-green text-beige/80 relative pt-24 pb-8 overflow-hidden">
+    <footer className="bg-deep-green text-beige/80 relative pt-12 pb-6 overflow-hidden">
       {/* Forme de vague SVG en haut */}
       <div className="absolute top-0 left-0 right-0 text-beige/5 pointer-events-none" style={{ transform: 'translateY(-99%)' }}>
         <svg className="w-full h-auto" viewBox="0 0 1440 120" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -55,32 +55,31 @@ export function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           {/* Colonne Marque */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <FooterLogo />
-            <p className="text-sm font-display text-yellow italic mt-2">
+            <p className="text-sm font-display text-yellow italic">
               Le goût du partage, près de chez vous.
             </p>
-            <p className="text-sm">
+            <p className="text-xs">
               Connectez-vous avec les saveurs authentiques de votre quartier.
             </p>
           </div>
 
           {/* Colonne Navigation */}
           <div>
-            <h3 className="text-base font-bold text-beige mb-4">Explorer</h3>
-            <ul className="space-y-2">
+            <h3 className="text-base font-bold text-beige mb-3">Explorer</h3>
+            <ul className="space-y-1.5">
               <FooterLink to="/catalogue">Catalogue des plats</FooterLink>
               <FooterLink to="/register?role=chef">Devenir Chef</FooterLink>
-              {/* Ajouter "Comment ça marche?" si la page existe */} 
             </ul>
           </div>
 
           {/* Colonne Support/Légal */}
           <div>
-            <h3 className="text-base font-bold text-beige mb-4">Aide & Informations</h3>
-            <ul className="space-y-2">
+            <h3 className="text-base font-bold text-beige mb-3">Aide & Informations</h3>
+            <ul className="space-y-1.5">
               <FooterLink to="/faq">FAQ</FooterLink>
               <FooterLink to="/contact">Contactez-nous</FooterLink>
               <FooterLink to="/cgu">Conditions Générales</FooterLink>
@@ -90,19 +89,19 @@ export function Footer() {
 
           {/* Colonne Social & Contact */}
           <div>
-             <h3 className="text-base font-bold text-beige mb-4">Restons connectés</h3>
-             <div className="flex space-x-3 mb-6">
+             <h3 className="text-base font-bold text-beige mb-3">Restons connectés</h3>
+             <div className="flex space-x-2 mb-5">
                <SocialIconLink href="#" icon={Instagram} label="Instagram" />
                <SocialIconLink href="#" icon={Facebook} label="Facebook" />
                <SocialIconLink href="#" icon={Twitter} label="Twitter" />
              </div>
-             <ul className="space-y-3 text-sm">
-                <li className="flex items-center space-x-2">
-                  <Mail className="h-4 w-4 text-yellow flex-shrink-0" />
+             <ul className="space-y-2 text-xs">
+                <li className="flex items-center space-x-1.5">
+                  <Mail className="h-3.5 w-3.5 text-yellow flex-shrink-0" />
                   <a href="mailto:contact@daylish.com" className="hover:text-yellow transition-colors">contact@daylish.com</a>
                 </li>
-                <li className="flex items-center space-x-2">
-                  <Phone className="h-4 w-4 text-yellow flex-shrink-0" />
+                <li className="flex items-center space-x-1.5">
+                  <Phone className="h-3.5 w-3.5 text-yellow flex-shrink-0" />
                   <span>01 23 45 67 89</span>
                 </li>
              </ul>
@@ -110,7 +109,7 @@ export function Footer() {
         </div>
 
         {/* Ligne Copyright */}
-        <div className="border-t border-beige/20 pt-8 text-center">
+        <div className="border-t border-beige/20 pt-6 text-center">
           <p className="text-xs text-beige/60">
             © {currentYear} Daylish. Tous droits réservés.
           </p>
