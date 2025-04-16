@@ -29,11 +29,11 @@ export function MealCard({ meal, chef }: MealCardProps) {
 
   return (
     <div className="card group flex flex-col h-full overflow-hidden">
-      <div className="relative aspect-video w-full flex-shrink-0">
+      <div className="relative aspect-video w-full flex-shrink-0 overflow-hidden transition-transform duration-500 ease-in-out group-hover:scale-105">
         <img
           src={meal.image}
           alt={meal.title}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         
