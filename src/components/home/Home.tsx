@@ -100,7 +100,7 @@ export function Home() {
             {popularMeals.map((meal) => (
               <div 
                 key={meal.id} 
-                className="card group hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+                className="relative group hover:scale-[1.02] transition-all duration-300 border-b-4 border-transparent group-hover:border-yellow"
               >
                 <MealCard 
                   meal={meal} 
