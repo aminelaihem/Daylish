@@ -42,7 +42,7 @@ const popularMeals = [
     title: "Tajine d'Agneau aux Pruneaux",
     description: 'Un classique sucré-salé, fondant et parfumé.',
     price: 12,
-    image: 'https://images.unsplash.com/photo-1604510719584-8e1135d2a0f0?auto=format&fit=crop&q=80&w=800',
+    image: 'https://img.fourchette-et-bikini.fr/660x495/2021-07/shutterstock_1790449451.webp',
     ingredients: ['Agneau', 'Pruneaux', 'Amandes', 'Oignons', 'Épices'],
     allergens: ['Fruits à coque'],
     category: 'Plat principal',
