@@ -98,7 +98,10 @@ export function Home() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {popularMeals.map((meal) => (
-              <div key={meal.id} className="card group hover:shadow-2xl transition-all duration-500">
+              <div 
+                key={meal.id} 
+                className="card group hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+              >
                 <MealCard 
                   meal={meal} 
                   chef={sampleChefs[meal.chefId as keyof typeof sampleChefs]}
