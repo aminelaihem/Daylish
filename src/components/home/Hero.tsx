@@ -19,31 +19,31 @@ export function Hero() {
 
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center">
-          {/* Animation d'apparition pour le titre */}
+          {/* Animation d'apparition pour le titre - Utilise font-display (Pique) */}
           <h1 
-            className="text-6xl font-vogue tracking-tight text-beige sm:text-7xl md:text-8xl leading-tight animate-fade-in-up duration-1000 ease-out"
+            className="text-6xl font-display tracking-tight text-beige sm:text-7xl md:text-8xl leading-tight animate-fade-in-up duration-1000 ease-out"
           >
             <span className="block">Saveurs d'ici,</span>
             <span className="block text-deep-green-light mt-1">cuisinées pour vous</span>
           </h1>
-          {/* Animation d'apparition pour le paragraphe */}
+          {/* Animation d'apparition pour le paragraphe - Utilise font-sans (Blatant) par défaut */}
           <p 
-            className="mt-8 max-w-2xl mx-auto text-xl text-beige/90 font-blatant sm:text-2xl md:mt-10 leading-relaxed animate-fade-in-up duration-1000 delay-200 ease-out"
+            className="mt-8 max-w-2xl mx-auto text-xl text-beige/90 sm:text-2xl md:mt-10 leading-relaxed animate-fade-in-up duration-1000 delay-200 ease-out"
           >
             Explorez une variété de plats authentiques, mijotés avec passion par les talents culinaires de votre voisinage.
           </p>
-          {/* Boutons avec styles et animations améliorés */}
+          {/* Boutons avec styles et animations améliorés - Utilisent font-sans (Blatant) et font-bold */}
           <div className="mt-16 flex flex-col sm:flex-row justify-center items-center gap-6 animate-fade-in-up duration-1000 delay-400 ease-out">
             <Link
               to="/catalogue"
-              className="btn-primary group inline-flex items-center justify-center px-8 py-4 text-lg font-blatant-bold rounded-xl shadow-lg bg-gradient-to-r from-yellow to-orange-400 text-deep-green hover:shadow-xl hover:brightness-110 focus:ring-yellow/50 transform transition-all duration-300 ease-out hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-green active:scale-[0.98]"
+              className="btn-primary group inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-xl shadow-lg bg-gradient-to-r from-yellow to-orange-400 text-deep-green hover:shadow-xl hover:brightness-110 focus:ring-yellow/50 transform transition-all duration-300 ease-out hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-green active:scale-[0.98]"
             >
               <Search className="mr-3 h-5 w-5 transition-transform duration-300 group-hover:rotate-[-12deg]" />
               Trouver un plat
             </Link>
             <Link
               to="/register"
-              className="inline-flex items-center justify-center px-8 py-4 text-lg font-blatant-bold rounded-xl shadow-md transform transition-all duration-300 ease-out bg-beige text-deep-green hover:bg-opacity-90 hover:shadow-lg border border-transparent hover:border-deep-green/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-beige focus:ring-offset-deep-green active:scale-[0.98] hover:scale-[1.03]"
+              className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-xl shadow-md transform transition-all duration-300 ease-out bg-beige text-deep-green hover:bg-opacity-90 hover:shadow-lg border border-transparent hover:border-deep-green/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-beige focus:ring-offset-deep-green active:scale-[0.98] hover:scale-[1.03]"
             >
               <ChefHat className="mr-3 h-5 w-5" />
               Devenir Chef Partenaire

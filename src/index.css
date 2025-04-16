@@ -3,40 +3,65 @@
 @tailwind utilities;
 
 @layer base {
+  /* ============================
+     Définitions des polices locales
+     ============================ */
+
+  /* --- Police Pique (Affichage/Titres) --- */
   @font-face {
-    font-family: 'Vogue';
-    src: url('./assets/fonts/Vogue.woff2') format('woff2'); /* Adaptez le format si nécessaire */
-    font-weight: normal;
+    font-family: 'Pique'; /* Nom simplifié */
+    src: url('./assets/fonts/Pique.otf') format('opentype');
+    font-weight: normal; /* Pique n'a qu'une graisse */
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* --- Police Blatant (Corps/Texte courant) --- */
+  @font-face {
+    font-family: 'Blatant'; /* Nom simplifié */
+    src: url('./assets/fonts/Blatant.otf') format('opentype');
+    font-weight: 400; /* Regular */
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Blatant Bold';
-    src: url('./assets/fonts/Blatant-Bold.woff2') format('woff2'); /* Adaptez le format si nécessaire */
-    font-weight: bold;
+    font-family: 'Blatant';
+    src: url('./assets/fonts/Blatant-Italic.otf') format('opentype');
+    font-weight: 400; /* Regular */
+    font-style: italic;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Blatant';
+    src: url('./assets/fonts/Blatant-Bold.otf') format('opentype');
+    font-weight: 700; /* Bold */
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Blatant Regular';
-    src: url('./assets/fonts/Blatant-Regular.woff2') format('woff2'); /* Adaptez le format si nécessaire */
-    font-weight: normal;
-    font-style: normal;
+    font-family: 'Blatant';
+    src: url('./assets/fonts/Blatant-BoldItalic.otf') format('opentype');
+    font-weight: 700; /* Bold */
+    font-style: italic;
     font-display: swap;
   }
   
-  /* Styles de base améliorés */
+  /* ============================
+     Styles de base
+     ============================ */
   body {
-    @apply bg-beige text-deep-green font-blatant antialiased leading-relaxed;
-    /* antialiased pour un rendu de police plus doux */
-    /* leading-relaxed pour un meilleur interligne par défaut */
+    /* Appliquer Blatant comme police par défaut pour tout le site */
+    @apply font-sans text-deep-green antialiased leading-relaxed;
+    /* font-sans sera mappé à Blatant dans Tailwind config */
   }
   
+  /* Les titres utiliseront la graisse définie par font-bold par défaut via Tailwind */
   h1, h2, h3, h4, h5, h6 {
-    /* Appliquer la graisse bold par défaut aux titres */
-    @apply font-blatant-bold;
+     /* On peut laisser Tailwind gérer la graisse via font-bold, ou forcer ici si besoin */
+     /* @apply font-bold; - Redondant si Tailwind est bien configuré */
   }
 }
 
@@ -50,26 +75,22 @@
 
 @layer components {
   .btn-primary {
-    /* Bouton principal : Vert Foncé / Texte Beige */
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-blatant-bold bg-deep-green text-beige shadow-md hover:bg-opacity-90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green-light focus:ring-offset-beige transition-all duration-200 transform active:scale-[0.98];
-    /* Ajout : focus states, taille py-3, active state */
+    /* Bouton principal : Utilise font-sans (Blatant) et font-bold par défaut via Tailwind */
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-bold bg-deep-green text-beige shadow-md hover:bg-opacity-90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green-light focus:ring-offset-beige transition-all duration-200 transform active:scale-[0.98];
   }
   
   .btn-secondary {
-    /* Bouton secondaire : Vert Clair / Texte Vert Foncé */
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-blatant-bold bg-deep-green-light text-deep-green shadow-md hover:bg-opacity-90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green focus:ring-offset-beige transition-all duration-200 transform active:scale-[0.98];
-    /* Ajout : focus states, taille py-3, active state */
+    /* Bouton secondaire : Utilise font-sans (Blatant) et font-bold par défaut via Tailwind */
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-bold bg-deep-green-light text-deep-green shadow-md hover:bg-opacity-90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green focus:ring-offset-beige transition-all duration-200 transform active:scale-[0.98];
   }
   
   .card {
-    /* Carte par défaut : Fond Blanc, ombre douce */
     @apply bg-white rounded-xl shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:shadow-xl;
-    /* Arrondi plus doux (xl), ombre lg hover xl */
   }
   
   .section-title {
-    /* Titre de section : Grande taille, couleur gérée dans le composant */
-    @apply text-4xl md:text-5xl font-blatant-bold mb-6 text-center;
-    /* Taille augmentée, mb-6, text-center par défaut */
+    /* Utilise la police d'affichage (Pique) et la graisse bold par défaut */
+    @apply text-4xl md:text-5xl font-display font-bold mb-6 text-center;
+    /* Note: Pique n'a qu'une graisse, font-bold n'aura pas d'effet visuel mais garde la sémantique */
   }
 }

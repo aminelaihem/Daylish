@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import defaultTheme from 'tailwindcss/defaultTheme'; // Importer le thème par défaut
+
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -11,10 +13,26 @@ export default {
         'yellow': '#FFC255'
       },
       fontFamily: {
-        // Assurez-vous que les noms ici correspondent EXACTEMENT aux `font-family` définis dans @font-face
-        'vogue': ['Vogue', 'cursive'], // Police pour titres très stylés
-        'blatant-bold': ['Blatant Bold', 'sans-serif'], // Police pour titres/sous-titres
-        'blatant': ['Blatant Regular', 'sans-serif'] // Police pour le corps de texte
+        // Remplacer la police sans-serif par défaut par Blatant
+        // Inclure les polices système comme fallback
+        sans: ['Blatant', ...defaultTheme.fontFamily.sans],
+        // Définir une police "display" pour Pique
+        display: ['Pique', 'cursive'], // Fallback 'cursive' générique
+      },
+      // Définition des keyframes et animations (ajoutées précédemment)
+      keyframes: {
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'pulse-slow-soft': {
+          '0%, 100%': { opacity: '0.15' },
+          '50%': { opacity: '0.25' },
+        }
+      },
+      animation: {
+        'fade-in-up': 'fade-in-up 1s ease-out forwards',
+        'pulse-slow-soft': 'pulse-slow-soft 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       }
     },
   },
