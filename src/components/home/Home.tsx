@@ -73,15 +73,20 @@ const sampleChefs = {
 
 export function Home() {
   return (
-    // Fond global implicite via body (bg-beige)
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-beige/20 via-white to-beige/10">
       <Hero />
       
-      {/* Section Plats Populaires - Fond: Beige (par défaut) */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="section-title text-deep-green text-left">Les pépites du quartier</h2>
+      {/* Section Plats Populaires */}
+      <section className="py-24 relative overflow-hidden">
+        {/* Effet de fond subtil */}
+        <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="flex justify-between items-center mb-16">
+            <h2 className="section-title text-deep-green text-left relative">
+              Les pépites du quartier
+              <span className="absolute -bottom-2 left-0 w-24 h-1 bg-yellow rounded-full" />
+            </h2>
             <Link 
               to="/catalogue" 
               className="text-deep-green-light font-blatant-bold hover:underline flex items-center group flex-shrink-0 ml-6"
@@ -91,11 +96,9 @@ export function Home() {
             </Link>
           </div>
           
-          {/* Cartes avec fond blanc cassé */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {popularMeals.map((meal) => (
-              // Wrapper appliquant le style .card et le fond
-              <div key={meal.id} className="card bg-soft-white">
+              <div key={meal.id} className="card group hover:shadow-2xl transition-all duration-500">
                 <MealCard 
                   meal={meal} 
                   chef={sampleChefs[meal.chefId as keyof typeof sampleChefs]}
@@ -106,36 +109,33 @@ export function Home() {
         </div>
       </section>
 
-      {/* Section Benefits - Fond: Beige (par défaut) */}
-      <section className="py-20">
-        <Benefits /> 
-      </section>
+      <Benefits />
       
-      {/* Section Testimonials - Fond: Beige (par défaut) */}
-      <section className="py-20">
-        <Testimonials />
-      </section>
+      <Testimonials />
       
-      {/* Section Appel à l'Action - Chef - Fond: Beige (par défaut) */}
-      {/* Cohérence du padding vertical */}
-      <section className="py-20">
-         {/* Cohérence de la largeur max et des marges horizontales/padding latéraux */}
-         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* La "carte" CTA avec fond Vert Foncé */}
-            {/* Cohérence du padding interne (légèrement plus grand pour l'emphase) */}
-            <div className="bg-deep-green rounded-2xl shadow-xl px-8 py-12 md:p-12 text-center">
-                 <h2 className="text-4xl md:text-5xl font-blatant-bold text-beige mb-5">Partagez votre passion culinaire</h2>
-                 <p className="text-xl text-beige/80 font-blatant mb-12 max-w-2xl mx-auto leading-relaxed">
-                     Rejoignez notre réseau de chefs passionnés et transformez votre cuisine en source de revenus et de rencontres.
-                 </p>
-                 <Link
-                     to="/register"
-                     className="btn-secondary px-10 py-4 text-lg"
-                 >
-                     Devenir Chef Partenaire
-                 </Link>
-            </div>
-         </div>
+      {/* Section Appel à l'Action - Chef */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="bg-gradient-to-br from-deep-green to-deep-green/90 rounded-2xl shadow-2xl px-8 py-16 md:p-16 text-center relative overflow-hidden">
+            {/* Effet de fond animé */}
+            <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
+            
+            <h2 className="text-4xl md:text-5xl font-blatant-bold text-beige mb-6 relative">
+              Partagez votre passion culinaire
+            </h2>
+            <p className="text-xl text-beige/90 font-blatant mb-12 max-w-2xl mx-auto leading-relaxed relative">
+              Rejoignez notre réseau de chefs passionnés et transformez votre cuisine en source de revenus et de rencontres.
+            </p>
+            <Link
+              to="/register"
+              className="btn-secondary px-10 py-4 text-lg relative z-10 transform hover:scale-105 transition-transform duration-300"
+            >
+              Devenir Chef Partenaire
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   );
