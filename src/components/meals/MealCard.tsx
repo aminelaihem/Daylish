@@ -112,10 +112,8 @@ export function MealCard({ meal, chef }: MealCardProps) {
             onClick={handleOrderClick}
             className={`btn-secondary group/button inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-lg shadow-md transform transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:shadow-lg active:scale-[0.98] flex-shrink-0 ${!isLoggedIn ? 'bg-gray-200 text-gray-600 hover:bg-gray-300 focus:ring-gray-300 group-hover:bg-gray-300' : 'bg-gradient-to-r from-yellow to-orange-400 text-deep-green hover:shadow-xl hover:brightness-110 focus:ring-yellow/50 group-hover:brightness-105'}`}
           >
-            {isLoggedIn ? (
-              <ShoppingBag className="h-4 w-4 mr-2 transition-transform duration-300 ease-in-out group-hover/button:rotate-[-6deg] group-hover/button:scale-110" />
-            ) : null}
-            {isLoggedIn ? 'Commander' : 'Se connecter'}
+            <ShoppingBag className="h-4 w-4 mr-2 transition-transform duration-300 ease-in-out group-hover/button:rotate-[-6deg] group-hover/button:scale-110" />
+            Commander
           </button>
         </div>
       </div>
