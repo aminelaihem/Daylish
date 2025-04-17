@@ -226,12 +226,11 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ type: "spring", damping: 30, stiffness: 400 }}
-            className="fixed inset-x-0 top-0 z-40 pt-24 origin-top md:hidden"
+            className="fixed inset-x-0 top-0 z-40 pt-20 mt-2 origin-top md:hidden mx-4"
           >
-            <div className="rounded-b-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
+            <div className="rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50 overflow-hidden">
               <div className="pt-5 pb-6 px-5">
                 <nav className="grid gap-y-4">
-                  {/* Liens animés en cascade */}
                   {[ { to: '/catalogue', label: 'Catalogue', icon: ShoppingBag }].map((item, index) => (
                      <motion.div
                         key={item.to}
