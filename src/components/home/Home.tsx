@@ -4,7 +4,7 @@ import { Benefits } from './Benefits';
 import { Testimonials } from './Testimonials';
 import { MealCard } from '../meals/MealCard';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChefHat } from 'lucide-react';
 
 // Simuler des données pour la section des plats populaires
 const popularMeals = [
@@ -133,8 +133,9 @@ export function Home() {
             </p>
             <Link
               to="/register"
-              className="btn-secondary px-10 py-4 text-lg relative z-10 transform hover:scale-105 transition-transform duration-300"
+              className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold rounded-xl bg-gradient-to-r from-yellow/90 to-orange-400/90 text-orange-800 hover:from-yellow hover:to-orange-400 shadow-lg hover:shadow-xl hover:shadow-yellow/20 transform transition-all duration-300 ease-out hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-green focus:ring-yellow/50 active:scale-[0.98] group"
             >
+              <ChefHat className="mr-3 h-5 w-5 text-orange-800 transition-transform duration-300 group-hover:rotate-[-12deg]" />
               Devenir Chef Partenaire
             </Link>
           </div>
