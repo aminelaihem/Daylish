@@ -9,7 +9,7 @@ const Logo = ({ isScrolled }: { isScrolled: boolean }) => (
   <Link to="/" className="flex items-center space-x-2 flex-shrink-0 group">
     {/* Le SVG change de taille et potentiellement de couleur avec le scroll */}
     <svg 
-      className={`w-auto text-deep-green group-hover:text-deep-green-light transition-all duration-300 ease-in-out ${isScrolled ? 'h-8' : 'h-10'}`}
+      className={`w-auto text-deep-green group-hover:text-deep-green-light transition-all duration-300 ease-in-out ${isScrolled ? 'h-12' : 'h-14'}`}
       viewBox="0 0 975 667" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
     >
       {/* Path data du logo ici... */}
