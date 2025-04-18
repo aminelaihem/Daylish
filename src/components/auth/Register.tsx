@@ -160,9 +160,17 @@ export function Register() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <p className="text-sm text-gray-500">
+              <div className="flex items-center justify-center space-x-2 mb-4">
+                <div className="h-px bg-gray-200 flex-1"></div>
+                <span className="text-sm text-gray-500 px-4">ou</span>
+                <div className="h-px bg-gray-200 flex-1"></div>
+              </div>
+              <p className="text-sm text-gray-600">
                 Déjà membre ?{' '}
-                <Link to="/login" className="text-orange-600 hover:text-orange-500 font-medium transition-colors">
+                <Link 
+                  to="/login" 
+                  className="inline-flex items-center justify-center px-6 py-2 rounded-xl bg-gradient-to-r from-yellow to-orange-400 text-deep-green hover:shadow-xl hover:brightness-110 transform transition-all duration-300 ease-out hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-green focus:ring-yellow/50 active:scale-[0.98] font-medium"
+                >
                   Se connecter
                 </Link>
               </p>
