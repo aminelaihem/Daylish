@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { User, ChefHat, Upload, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { User, ChefHat, Upload, X, ArrowLeft, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { Location } from '../../types/index';
 
 interface RegisterForm {
@@ -40,35 +41,78 @@ export function Register() {
     experience: ''
   });
 
-  // Étape 1 : Choix du type d'utilisateur (reste identique mais avec des animations)
+  // Étape 1 : Choix du type d'utilisateur
   if (step === 1) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-24 pb-12">
-        <div className="max-w-md mx-auto">
-          {/* Indicateur de progression */}
-          <div className="mb-8 flex justify-center">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-semibold">1</div>
-              <div className="w-16 h-1 bg-gray-200"></div>
-              <div className="w-8 h-8 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-semibold">2</div>
-              <div className="w-16 h-1 bg-gray-200"></div>
-              <div className="w-8 h-8 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-semibold">3</div>
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pt-24 pb-12">
+        <div className="max-w-md mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:shadow-2xl"
+          >
+            <div className="mb-8 flex justify-center">
+              <div className="flex items-center space-x-2">
+                <motion.div
+                  className="w-10 h-10 rounded-full bg-gradient-to-r from-yellow to-orange-400 text-white flex items-center justify-center font-semibold"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  1
+                </motion.div>
+                <div className="w-16 h-1 bg-gray-200 rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-yellow to-orange-400"
+                    initial={{ width: 0 }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  />
+                </div>
+                <div className="w-10 h-10 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-semibold">
+                  2
+                </div>
+                <div className="w-16 h-1 bg-gray-200 rounded-full"></div>
+                <div className="w-10 h-10 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-semibold">
+                  3
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 transform transition-all">
-            <h1 className="text-3xl font-bold text-gray-900 text-center mb-2">Bienvenue !</h1>
-            <p className="text-center text-gray-600 mb-8">Commençons par choisir votre profil</p>
+            <motion.h1 
+              className="text-4xl font-bold text-gray-900 text-center mb-2"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              Bienvenue !
+            </motion.h1>
+            <motion.p 
+              className="text-center text-gray-600 mb-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              Commençons par choisir votre profil
+            </motion.p>
             
             <div className="space-y-4">
-              <button
+              <motion.button
                 onClick={() => {
                   setForm(prev => ({ ...prev, userType: 'consumer' }));
                   setStep(2);
                 }}
-                className="w-full p-6 rounded-xl border-2 border-gray-200 hover:border-orange-500 hover:bg-orange-50 transition-all duration-200 group"
+                className="w-full p-6 rounded-xl border-2 border-gray-200 hover:border-orange-500 hover:bg-orange-50 transition-all duration-200 group relative overflow-hidden"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <div className="flex items-center space-x-4">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-yellow/10 to-orange-400/10"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <div className="flex items-center space-x-4 relative">
                   <div className="bg-orange-100 rounded-lg p-3 group-hover:bg-orange-200 transition-colors">
                     <User className="h-8 w-8 text-orange-600" />
                   </div>
@@ -79,16 +123,24 @@ export function Register() {
                     </p>
                   </div>
                 </div>
-              </button>
+              </motion.button>
 
-              <button
+              <motion.button
                 onClick={() => {
                   setForm(prev => ({ ...prev, userType: 'chef' }));
                   setStep(2);
                 }}
-                className="w-full p-6 rounded-xl border-2 border-gray-200 hover:border-orange-500 hover:bg-orange-50 transition-all duration-200 group"
+                className="w-full p-6 rounded-xl border-2 border-gray-200 hover:border-orange-500 hover:bg-orange-50 transition-all duration-200 group relative overflow-hidden"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <div className="flex items-center space-x-4">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-yellow/10 to-orange-400/10"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <div className="flex items-center space-x-4 relative">
                   <div className="bg-orange-100 rounded-lg p-3 group-hover:bg-orange-200 transition-colors">
                     <ChefHat className="h-8 w-8 text-orange-600" />
                   </div>
@@ -99,18 +151,23 @@ export function Register() {
                     </p>
                   </div>
                 </div>
-              </button>
+              </motion.button>
             </div>
 
-            <div className="mt-8 text-center">
+            <motion.div 
+              className="mt-8 text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
               <p className="text-sm text-gray-500">
                 Déjà membre ?{' '}
-                <Link to="/login" className="text-orange-600 hover:text-orange-500 font-medium">
+                <Link to="/login" className="text-orange-600 hover:text-orange-500 font-medium transition-colors">
                   Se connecter
                 </Link>
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     );
@@ -119,104 +176,153 @@ export function Register() {
   // Étape 2 : Informations de base
   if (step === 2) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-24 pb-12">
-        <div className="max-w-2xl mx-auto">
-          {/* Indicateur de progression mis à jour */}
-          <div className="mb-8 flex justify-center">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-semibold">✓</div>
-              <div className="w-16 h-1 bg-orange-500"></div>
-              <div className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-semibold">2</div>
-              <div className="w-16 h-1 bg-gray-200"></div>
-              <div className="w-8 h-8 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-semibold">3</div>
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pt-24 pb-12">
+        <div className="max-w-2xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:shadow-2xl"
+          >
+            <div className="mb-8 flex justify-center">
+              <div className="flex items-center space-x-2">
+                <motion.div
+                  className="w-10 h-10 rounded-full bg-gradient-to-r from-yellow to-orange-400 text-white flex items-center justify-center font-semibold"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Check className="w-5 h-5" />
+                </motion.div>
+                <div className="w-16 h-1 bg-gradient-to-r from-yellow to-orange-400 rounded-full"></div>
+                <motion.div
+                  className="w-10 h-10 rounded-full bg-gradient-to-r from-yellow to-orange-400 text-white flex items-center justify-center font-semibold"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  2
+                </motion.div>
+                <div className="w-16 h-1 bg-gray-200 rounded-full"></div>
+                <div className="w-10 h-10 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-semibold">
+                  3
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <button
+            <motion.button
               onClick={() => setStep(1)}
-              className="mb-6 text-gray-500 hover:text-gray-700 flex items-center space-x-2"
+              className="mb-6 text-gray-500 hover:text-gray-700 flex items-center space-x-2 transition-colors"
+              whileHover={{ x: -5 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
+              <ArrowLeft className="w-5 h-5" />
               <span>Retour</span>
-            </button>
+            </motion.button>
 
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <motion.h1 
+              className="text-3xl font-bold text-gray-900 mb-2"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               {form.userType === 'consumer' ? 'Créez votre compte' : 'Rejoignez nos chefs'}
-            </h1>
-            <p className="text-gray-600 mb-8">
+            </motion.h1>
+            <motion.p 
+              className="text-gray-600 mb-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               {form.userType === 'consumer' 
                 ? 'Pour commander vos plats préférés'
                 : 'Pour partager votre passion culinaire'
               }
-            </p>
+            </motion.p>
 
             <form className="space-y-6" onSubmit={(e) => {
               e.preventDefault();
               setStep(3);
             }}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <label className="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
                   <input
                     type="text"
                     required
                     placeholder="Jean Dupont"
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                     value={form.name}
                     onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
                   />
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                   <input
                     type="email"
                     required
                     placeholder="jean.dupont@example.com"
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                     value={form.email}
                     onChange={(e) => setForm(prev => ({ ...prev, email: e.target.value }))}
                   />
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
                   <label className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
                   <input
                     type="password"
                     required
                     placeholder="••••••••"
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                     value={form.password}
                     onChange={(e) => setForm(prev => ({ ...prev, password: e.target.value }))}
                   />
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
                   <label className="block text-sm font-medium text-gray-700 mb-1">Confirmer le mot de passe</label>
                   <input
                     type="password"
                     required
                     placeholder="••••••••"
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                     value={form.confirmPassword}
                     onChange={(e) => setForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
                   />
-                </div>
+                </motion.div>
               </div>
 
-              <div className="pt-6">
+              <motion.div 
+                className="pt-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
                 <button
                   type="submit"
-                  className="w-full bg-orange-600 text-white py-3 px-6 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors"
+                  className="w-full bg-gradient-to-r from-yellow to-orange-400 text-deep-green py-4 px-6 rounded-xl hover:shadow-xl hover:brightness-110 transform transition-all duration-300 ease-out hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-green focus:ring-yellow/50 active:scale-[0.98]"
                 >
                   Continuer
                 </button>
-              </div>
+              </motion.div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     );
@@ -224,219 +330,171 @@ export function Register() {
 
   // Étape 3 : Vérification d'identité et informations complémentaires
   return (
-    <div className="min-h-screen bg-gray-50 pt-24 pb-12">
-      <div className="max-w-2xl mx-auto">
-        {/* Indicateur de progression final */}
-        <div className="mb-8 flex justify-center">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-semibold">✓</div>
-            <div className="w-16 h-1 bg-green-500"></div>
-            <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-semibold">✓</div>
-            <div className="w-16 h-1 bg-orange-500"></div>
-            <div className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-semibold">3</div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pt-24 pb-12">
+      <div className="max-w-2xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:shadow-2xl"
+        >
+          <div className="mb-8 flex justify-center">
+            <div className="flex items-center space-x-2">
+              <motion.div
+                className="w-10 h-10 rounded-full bg-gradient-to-r from-yellow to-orange-400 text-white flex items-center justify-center font-semibold"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Check className="w-5 h-5" />
+              </motion.div>
+              <div className="w-16 h-1 bg-gradient-to-r from-yellow to-orange-400 rounded-full"></div>
+              <motion.div
+                className="w-10 h-10 rounded-full bg-gradient-to-r from-yellow to-orange-400 text-white flex items-center justify-center font-semibold"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Check className="w-5 h-5" />
+              </motion.div>
+              <div className="w-16 h-1 bg-gradient-to-r from-yellow to-orange-400 rounded-full"></div>
+              <motion.div
+                className="w-10 h-10 rounded-full bg-gradient-to-r from-yellow to-orange-400 text-white flex items-center justify-center font-semibold"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                3
+              </motion.div>
+            </div>
           </div>
-        </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <button
+          <motion.button
             onClick={() => setStep(2)}
-            className="mb-6 text-gray-500 hover:text-gray-700 flex items-center space-x-2"
+            className="mb-6 text-gray-500 hover:text-gray-700 flex items-center space-x-2 transition-colors"
+            whileHover={{ x: -5 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+            <ArrowLeft className="w-5 h-5" />
             <span>Retour</span>
-          </button>
+          </motion.button>
 
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dernière étape !</h1>
-          <p className="text-gray-600 mb-8">
-            Ajoutez une photo et vérifiez votre identité pour finaliser votre inscription
-          </p>
+          <motion.h1 
+            className="text-3xl font-bold text-gray-900 mb-2"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {form.userType === 'consumer' ? 'Presque terminé !' : 'Dernière étape !'}
+          </motion.h1>
+          <motion.p 
+            className="text-gray-600 mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {form.userType === 'consumer' 
+              ? 'Ajoutez votre photo de profil'
+              : 'Complétez votre profil de chef'
+            }
+          </motion.p>
 
-          <form className="space-y-8" onSubmit={(e) => {
-            e.preventDefault();
-            // TODO: Soumettre le formulaire
-          }}>
-            {/* Photo de profil */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-4">
-                Photo de profil
-                <span className="text-xs text-gray-500 ml-2">(Facultatif)</span>
-              </label>
-              <div className="flex items-center space-x-6">
-                <div className="h-32 w-32 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center relative group">
-                  {form.avatar ? (
-                    <>
+          <form className="space-y-6">
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {/* Section Avatar */}
+              <div className="flex flex-col items-center space-y-4">
+                <div className="relative">
+                  <div className="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                    {form.avatar ? (
                       <img
                         src={URL.createObjectURL(form.avatar)}
                         alt="Avatar"
-                        className="h-full w-full object-cover"
+                        className="w-full h-full object-cover"
                       />
-                      <button
-                        type="button"
-                        onClick={() => setForm(prev => ({ ...prev, avatar: null }))}
-                        className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <X className="h-8 w-8 text-white" />
-                      </button>
-                    </>
-                  ) : (
-                    <User className="h-16 w-16 text-gray-400" />
-                  )}
+                    ) : (
+                      <User className="w-16 h-16 text-gray-400" />
+                    )}
+                  </div>
+                  <motion.button
+                    type="button"
+                    className="absolute bottom-0 right-0 bg-gradient-to-r from-yellow to-orange-400 text-white p-2 rounded-full shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-110"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Upload className="w-5 h-5" />
+                  </motion.button>
                 </div>
-                
-                <div className="flex flex-col space-y-2">
-                  <label className="inline-flex items-center px-4 py-2 border border-orange-500 text-orange-600 rounded-lg hover:bg-orange-50 cursor-pointer transition-colors">
-                    <Upload className="h-5 w-5 mr-2" />
-                    <span>Choisir une photo</span>
-                    <input
-                      type="file"
-                      className="hidden"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) setForm(prev => ({ ...prev, avatar: file }));
-                      }}
+                <p className="text-sm text-gray-500 text-center">
+                  Ajoutez une photo de profil pour que les autres utilisateurs puissent vous reconnaître
+                </p>
+              </div>
+
+              {form.userType === 'chef' && (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                  >
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Biographie</label>
+                    <textarea
+                      placeholder="Parlez-nous de votre passion pour la cuisine..."
+                      className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 min-h-[100px]"
+                      value={form.bio}
+                      onChange={(e) => setForm(prev => ({ ...prev, bio: e.target.value }))}
                     />
-                  </label>
-                  <p className="text-xs text-gray-500">
-                    JPG ou PNG, max 5MB
-                  </p>
-                </div>
-              </div>
-            </div>
+                  </motion.div>
 
-            {/* Document d'identité */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-4">
-                Document d'identité
-                <span className="text-red-500 ml-1">*</span>
-              </label>
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-orange-500 transition-colors">
-                <div className="space-y-1 text-center">
-                  {form.idDocument ? (
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-center text-orange-600">
-                        <svg className="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 48 48">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <p className="text-sm text-gray-600">
-                        {form.idDocument.name}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => setForm(prev => ({ ...prev, idDocument: null }))}
-                        className="text-sm text-red-600 hover:text-red-500"
-                      >
-                        Supprimer
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                      <div className="flex text-sm text-gray-600">
-                        <label className="relative cursor-pointer rounded-md font-medium text-orange-600 hover:text-orange-500">
-                          <span>Télécharger un fichier</span>
-                          <input
-                            type="file"
-                            className="sr-only"
-                            accept="image/*,.pdf"
-                            required
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) setForm(prev => ({ ...prev, idDocument: file }));
-                            }}
-                          />
-                        </label>
-                      </div>
-                      <p className="text-xs text-gray-500">
-                        CNI, Passeport ou Permis de conduire (PDF, JPG ou PNG)
-                      </p>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Spécialités</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Cuisine française, Pâtisserie, Végétarien..."
+                      className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                      value={form.specialties?.join(', ')}
+                      onChange={(e) => setForm(prev => ({ ...prev, specialties: e.target.value.split(', ') }))}
+                    />
+                  </motion.div>
 
-            {/* Adresse */}
-            <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Votre adresse</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Adresse complète
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="123 rue de la Paix"
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    value={form.location.address}
-                    onChange={(e) => setForm(prev => ({
-                      ...prev,
-                      location: { ...prev.location, address: e.target.value }
-                    }))}
-                  />
-                </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Expérience</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: 5 ans d'expérience en restauration..."
+                      className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                      value={form.experience}
+                      onChange={(e) => setForm(prev => ({ ...prev, experience: e.target.value }))}
+                    />
+                  </motion.div>
+                </>
+              )}
+            </motion.div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Ville
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Paris"
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    value={form.location.city}
-                    onChange={(e) => setForm(prev => ({
-                      ...prev,
-                      location: { ...prev.location, city: e.target.value }
-                    }))}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Code postal
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="75000"
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    value={form.location.postalCode}
-                    onChange={(e) => setForm(prev => ({
-                      ...prev,
-                      location: { ...prev.location, postalCode: e.target.value }
-                    }))}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Bouton de soumission */}
-            <div className="pt-6">
+            <motion.div 
+              className="pt-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
               <button
                 type="submit"
-                className="w-full bg-orange-600 text-white py-3 px-6 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors"
+                className="w-full bg-gradient-to-r from-yellow to-orange-400 text-deep-green py-4 px-6 rounded-xl hover:shadow-xl hover:brightness-110 transform transition-all duration-300 ease-out hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-green focus:ring-yellow/50 active:scale-[0.98]"
               >
-                Finaliser l'inscription
+                Terminer l'inscription
               </button>
-              <p className="mt-4 text-sm text-gray-500 text-center">
-                En vous inscrivant, vous acceptez nos{' '}
-                <a href="#" className="text-orange-600 hover:text-orange-500">
-                  conditions d'utilisation
-                </a>{' '}
-                et notre{' '}
-                <a href="#" className="text-orange-600 hover:text-orange-500">
-                  politique de confidentialité
-                </a>
-              </p>
-            </div>
+            </motion.div>
           </form>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
