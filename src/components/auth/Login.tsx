@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Mail, Lock, ChefHat } from 'lucide-react';
+import { Mail, Lock, ChefHat, Loader2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface LoginForm {
   email: string;
@@ -16,6 +17,7 @@ export function Login() {
   });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,36 +57,66 @@ export function Login() {
   const message = location.state?.message;
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white pt-24 pb-12">
-      <div className="max-w-md mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-8 transform transition-all">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-24 pb-12">
+      <div className="max-w-md mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:shadow-2xl"
+        >
           {/* Logo et En-tête */}
-          <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
-              <div className="bg-orange-100 rounded-full p-3">
-                <ChefHat className="h-12 w-12 text-orange-600" />
+          <motion.div 
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <motion.div 
+              className="flex justify-center mb-4"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="bg-gradient-to-r from-yellow to-orange-400 rounded-full p-3 shadow-lg">
+                <ChefHat className="h-12 w-12 text-white" />
               </div>
-            </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Bon retour parmi nous !</h1>
+            </motion.div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">Bon retour parmi nous !</h1>
             <p className="text-gray-600">Connectez-vous pour accéder à vos plats préférés</p>
-          </div>
+          </motion.div>
 
-          {/* Message d'erreur */}
-          {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-sm text-red-600 text-center">{error}</p>
-            </div>
-          )}
+          {/* Messages */}
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl"
+              >
+                <p className="text-sm text-red-600 text-center">{error}</p>
+              </motion.div>
+            )}
 
-          {message && (
-            <div className="mb-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
-              <p className="text-sm text-orange-600 text-center">{message}</p>
-            </div>
-          )}
+            {message && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="mb-6 p-4 bg-orange-50 border border-orange-200 rounded-xl"
+              >
+                <p className="text-sm text-orange-600 text-center">{message}</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Email
               </label>
@@ -92,22 +124,29 @@ export function Login() {
                 <input
                   type="email"
                   required
-                  className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                   placeholder="votre@email.com"
                   value={form.email}
                   onChange={e => setForm(prev => ({ ...prev, email: e.target.value }))}
                 />
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Mot de passe */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               <div className="flex items-center justify-between mb-1">
                 <label className="block text-sm font-medium text-gray-700">
                   Mot de passe
                 </label>
-                <Link to="/forgot-password" className="text-sm text-orange-600 hover:text-orange-700 hover:underline">
+                <Link 
+                  to="/forgot-password" 
+                  className="text-sm text-orange-600 hover:text-orange-700 hover:underline transition-colors"
+                >
                   Mot de passe oublié ?
                 </Link>
               </div>
@@ -115,60 +154,80 @@ export function Login() {
                 <input
                   type="password"
                   required
-                  className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                   placeholder="••••••••"
                   value={form.password}
                   onChange={e => setForm(prev => ({ ...prev, password: e.target.value }))}
                 />
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Se souvenir de moi */}
-            <div className="flex items-center">
+            <motion.div 
+              className="flex items-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               <input
                 type="checkbox"
                 id="remember"
-                className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded transition-colors"
               />
               <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
                 Se souvenir de moi
               </label>
-            </div>
+            </motion.div>
 
-            {/* Bouton de connexion modifié avec état de chargement */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-orange-600 text-white py-3 px-4 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors transform hover:scale-[1.02] active:scale-[0.98] duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            {/* Bouton de connexion */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
             >
-              {isLoading ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Connexion en cours...
-                </span>
-              ) : (
-                'Se connecter'
-              )}
-            </button>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full bg-gradient-to-r from-yellow to-orange-400 text-deep-green py-4 px-6 rounded-xl hover:shadow-xl hover:brightness-110 transform transition-all duration-300 ease-out hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-green focus:ring-yellow/50 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? (
+                  <span className="flex items-center justify-center">
+                    <Loader2 className="animate-spin h-5 w-5 mr-2" />
+                    Connexion en cours...
+                  </span>
+                ) : (
+                  'Se connecter'
+                )}
+              </button>
+            </motion.div>
           </form>
 
           {/* Lien d'inscription */}
-          <div className="mt-8 text-center">
+          <motion.div 
+            className="mt-8 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <div className="h-px bg-gray-200 flex-1"></div>
+              <span className="text-sm text-gray-500 px-4">ou</span>
+              <div className="h-px bg-gray-200 flex-1"></div>
+            </div>
             <p className="text-gray-600">
               Pas encore de compte ?{' '}
               <Link 
                 to="/register" 
-                className="text-orange-600 hover:text-orange-700 font-medium hover:underline"
+                className="inline-flex items-center justify-center px-6 py-2 rounded-xl bg-gradient-to-r from-yellow to-orange-400 text-deep-green hover:shadow-xl hover:brightness-110 transform transition-all duration-300 ease-out hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-green focus:ring-yellow/50 active:scale-[0.98] font-medium"
               >
                 Créer un compte
               </Link>
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );
