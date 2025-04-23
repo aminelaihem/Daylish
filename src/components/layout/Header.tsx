@@ -40,20 +40,32 @@ function useScrollPosition() {
 const NavLink = ({ to, children, isScrolled }: { to: string; children: React.ReactNode, isScrolled: boolean }) => {
   const location = useLocation();
   const isActive = location.pathname === to;
-  const textColor = isScrolled ? 'text-deep-green/80 group-hover:text-deep-green' : 'text-white/80 group-hover:text-white';
-  const activeTextColor = isScrolled ? 'text-deep-green' : 'text-white';
-  const capsuleBg = isScrolled ? 'bg-deep-green/5 group-hover:bg-deep-green/10' : 'bg-white/5 group-hover:bg-white/10';
-  const activeCapsuleBg = isScrolled ? 'bg-deep-green/10' : 'bg-white/15';
+  
+  // Styles de texte (logique inchangée)
+  const textClasses = isActive
+    ? (isScrolled ? 'text-deep-green' : 'text-white')
+    : `${isScrolled ? 'text-deep-green/80' : 'text-white/80'} ${isScrolled ? 'group-hover:text-deep-green' : 'group-hover:text-white'}`;
+
+  // Styles de capsule (logique de base inchangée, mais application séparée)
+  const activeCapsuleClasses = `absolute inset-0 rounded-full transition-all duration-300 ease-out ${isScrolled ? 'bg-deep-green/5' : 'bg-white/15'}`; // Fond actif, toujours visible (scale 1 par défaut)
+
+  const inactiveCapsuleClasses = `
+    absolute inset-0 rounded-full
+    ${isScrolled ? 'bg-deep-green/5' : 'bg-white/5'}          // Fond de base
+    ${isScrolled ? 'group-hover:bg-deep-green/30' : 'group-hover:bg-white/10'} // Fond au survol
+    scale-x-0 group-hover:scale-x-100                      // Animation de scale
+    transition-transform duration-300 ease-out               // Transition spécifique pour transform
+    transform-gpu origin-center                             // Optimisation et origine
+  `;
 
   return (
     <Link
       to={to}
-      className={`relative px-4 py-1.5 text-sm font-medium rounded-full transition-colors duration-200 group ${isActive ? activeTextColor : textColor}`}
+      className={`relative px-4 py-1.5 text-sm font-medium rounded-full transition-colors duration-200 group ${textClasses}`}
     >
       <span className="relative z-10">{children}</span>
-      <span 
-        className={`absolute inset-0 rounded-full transition-all duration-300 ease-out transform ${isActive ? activeCapsuleBg : capsuleBg + ' scale-x-0 group-hover:scale-x-100'}`}
-        style={{ transformOrigin: 'center' }}
+      <span
+        className={isActive ? activeCapsuleClasses : inactiveCapsuleClasses}
       />
     </Link>
   );
