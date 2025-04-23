@@ -96,10 +96,12 @@ export function OrderSuccess() {
               </div>
 
               {/* Actions */}
-              <div className="space-y-3">
+              <div className="space-y-3 mt-4">
                 <Link
                   to="/profile"
-                  className="block w-full bg-orange-600 text-white text-center py-3 px-4 rounded-xl font-medium hover:bg-orange-700 transition-colors"
+                  className="block w-full text-center py-3 px-4 rounded-xl font-bold shadow-md 
+                             bg-gradient-to-r from-yellow to-orange-400 text-deep-green 
+                             hover:shadow-lg hover:brightness-110 transition-all duration-200"
                 >
                   Suivre ma commande
                 </Link>
