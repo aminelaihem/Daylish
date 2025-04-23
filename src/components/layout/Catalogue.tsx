@@ -26,17 +26,7 @@ export function Catalogue() {
   ];
 
   return (
-    <div className="min-h-screen pt-20 pb-12">
-      {/* En-tête du catalogue */}
-      <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold mb-4">Catalogue des plats</h1>
-          <p className="text-lg text-orange-100 mb-8">
-            Découvrez une sélection de plats faits maison près de chez vous
-          </p>
-        </div>
-      </div>
-
+    <div className="min-h-screen pb-12">
       {/* Filtres étendus */}
       {showFilters && (
         <div className="bg-white border-b border-gray-200">
@@ -112,7 +102,7 @@ export function Catalogue() {
       )}
 
       {/* Grille de plats */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
         <MealGrid />
       </div>
     </div>
