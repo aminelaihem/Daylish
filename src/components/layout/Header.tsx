@@ -81,6 +81,7 @@ const DropdownMenuItem = ({ children, onClick, icon: Icon, isDanger = false }: {
 
 export function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
   const scrollPosition = useScrollPosition();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -94,32 +95,38 @@ export function Header() {
     navigate('/');
   };
 
-  const isScrolled = scrollPosition > 20; // Seuil légèrement augmenté
+  const isScrolled = scrollPosition > 20; 
+  const isOnHomePage = location.pathname === '/';
 
-  // Couleur de texte adaptative pour les boutons/icones selon le scroll
-  const adaptiveTextColor = isScrolled ? 'text-deep-green' : 'text-white';
-  const adaptiveHoverBg = isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/10';
+  // Réintroduire useEffectiveScrolled
+  const useEffectiveScrolled = isScrolled || !isOnHomePage;
+
+  // Réutiliser useEffectiveScrolled pour les styles adaptatifs
+  const adaptiveTextColor = useEffectiveScrolled ? 'text-deep-green' : 'text-white';
+  const adaptiveHoverBg = useEffectiveScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/10';
+  const adaptiveBorderColor = useEffectiveScrolled ? 'border-deep-green/50' : 'border-white/50';
+  const adaptiveHoverBorderColor = useEffectiveScrolled ? 'hover:border-deep-green' : 'hover:border-deep-green'; // Garder le hover vert sur le bouton chef dans les 2 cas
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isScrolled ? 'h-16 shadow-md bg-white/90 backdrop-blur-lg' : 'h-24 bg-transparent'}`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${useEffectiveScrolled ? 'h-16 shadow-md bg-white/90 backdrop-blur-lg' : 'h-24 bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex justify-between items-center h-full">
             {/* Logo Section */}
             <div className="flex items-center">
-              <Logo isScrolled={isScrolled} />
+              <Logo isScrolled={useEffectiveScrolled} />
             </div>
 
             {/* Navigation Desktop */} 
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
-              <NavLink to="/catalogue" isScrolled={isScrolled}>Catalogue</NavLink>
+              <NavLink to="/catalogue" isScrolled={useEffectiveScrolled}>Catalogue</NavLink>
               {/* <NavLink to="/comment-ca-marche">Comment ça marche?</NavLink> */}
-          </nav>
+            </nav>
 
             {/* Actions Utilisateur Desktop & Bouton Mobile */} 
             <div className="flex items-center">
               <div className="hidden md:flex items-center space-x-4">
-            {isLoggedIn ? (
+                {isLoggedIn ? (
                   <Menu as="div" className="relative inline-block text-left">
                     <div>
                       <Menu.Button className={`flex items-center space-x-2 p-1 rounded-full ${adaptiveHoverBg} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green-light transition-colors group`}>
@@ -127,10 +134,10 @@ export function Header() {
                         <img
                           src={user.avatar || 'https://via.placeholder.com/150'}
                           alt=""
-                          className={`h-9 w-9 rounded-full object-cover ring-2 ring-offset-1 transition-all duration-300 ${isScrolled ? 'ring-deep-green/20 group-hover:ring-deep-green-light' : 'ring-white/20 group-hover:ring-white'}`}
+                          className={`h-9 w-9 rounded-full object-cover ring-2 ring-offset-1 transition-all duration-300 ${useEffectiveScrolled ? 'ring-deep-green/20 group-hover:ring-deep-green-light' : 'ring-white/20 group-hover:ring-white'}`}
                         />
                          {/* Nom caché sur écrans moyens pour laisser place aux boutons */} 
-                        <span className={`text-sm font-medium ${adaptiveTextColor} group-hover:${isScrolled ? 'text-deep-green' : 'text-white'} hidden lg:inline transition-colors`}>{user.name}</span>
+                        <span className={`text-sm font-medium ${adaptiveTextColor} group-hover:${useEffectiveScrolled ? 'text-deep-green' : 'text-white'} hidden lg:inline transition-colors`}>{user.name}</span>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -147,7 +154,6 @@ export function Header() {
                           <DropdownMenuItem onClick={() => { navigate('/profile'); setIsMobileMenuOpen(false); }} icon={User}>
                             Mon Profil
                           </DropdownMenuItem>
-                          {/* Ajouter d'autres items si besoin */}
                         </div>
                         <div className="px-1 py-1">
                            <DropdownMenuItem onClick={handleLogout} icon={LogOut} isDanger>
@@ -161,16 +167,16 @@ export function Header() {
                   <div className="flex items-center space-x-3">
                     <Link
                       to="/login" 
-                      className={`group relative flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-transparent transition-all duration-200 ease-out ${isScrolled ? 'text-deep-green/80 hover:text-deep-green hover:bg-deep-green/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
+                      className={`group relative flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-transparent transition-all duration-200 ease-out ${useEffectiveScrolled ? 'text-deep-green/80 hover:text-deep-green hover:bg-deep-green/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
                     >
-                       <LogIn className={`mr-1.5 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${isScrolled ? 'text-deep-green/60' : 'text-white/60'}`} />
+                       <LogIn className={`mr-1.5 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${useEffectiveScrolled ? 'text-deep-green/60' : 'text-white/60'}`} />
                       Se connecter
                     </Link>
                     <Link 
                        to="/register" 
                        className="group relative inline-flex items-center px-5 py-2 text-sm font-bold rounded-lg overflow-hidden bg-gradient-to-r from-yellow to-orange-400 text-deep-green shadow-md hover:shadow-lg hover:shadow-yellow/30 transform hover:scale-[1.03] active:scale-[0.99] transition-all duration-200 ease-out"
                     >
-                       {/* Effet Shimmer (pseudo-élément pourrait être mieux, mais utilisons un dégradé animé pour la simplicité) */}
+                       {/* Effet Shimmer */}
                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out opacity-50 group-hover:opacity-100"></span>
                        <span className="relative z-10">S'inscrire</span>
                        <ArrowRight className="ml-1.5 h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-1 relative z-10" />
@@ -182,15 +188,17 @@ export function Header() {
                    <Link 
                      to="/register?role=chef" 
                      className={`group relative ml-4 px-4 py-2 text-sm font-medium rounded-lg border overflow-hidden transition-all duration-300 ease-out 
-                       ${isScrolled 
+                       ${useEffectiveScrolled 
                          ? 'border-deep-green text-deep-green hover:text-white' 
-                         : 'border-white/50 text-white/90 hover:text-deep-green hover:border-deep-green'}`}
+                         : `${adaptiveBorderColor} text-white/90 hover:text-deep-green ${adaptiveHoverBorderColor}`}` // hover:text-deep-green dans les 2 cas
+                    }
                     >
                       {/* Fond animé au survol */}
                       <span className={`absolute inset-0 w-full h-full transition-colors duration-300 ease-out 
-                        ${isScrolled 
+                        ${useEffectiveScrolled 
                           ? 'bg-deep-green opacity-0 group-hover:opacity-100' 
-                          : 'bg-white opacity-0 group-hover:opacity-10 group-hover:bg-deep-green group-hover:opacity-100'}`}>
+                          : 'bg-deep-green opacity-0 group-hover:opacity-100'}` // Fond toujours deep-green au survol
+                      }>
                       </span>
                       <span className="relative flex items-center">
                          <ChefHat className="inline h-4 w-4 mr-1.5 -mt-px transition-transform duration-300 ease-in-out group-hover:rotate-[-12deg]" />
@@ -202,96 +210,69 @@ export function Header() {
 
               {/* Bouton Menu Mobile */}
               <div className="md:hidden ml-3">
-                 <button
-                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                   className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-deep-green-light transition-colors ${adaptiveTextColor} ${adaptiveHoverBg}`}
-                   aria-expanded={isMobileMenuOpen}
-                 >
-                   <span className="sr-only">Ouvrir menu</span>
-                   <motion.div animate={{ rotate: isMobileMenuOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
-                     {isMobileMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
-                   </motion.div>
-                 </button>
+                <button
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className={`inline-flex items-center justify-center p-2 rounded-md ${adaptiveTextColor} ${adaptiveHoverBg} focus:outline-none focus:ring-2 focus:ring-inset focus:ring-deep-green-light transition-colors`}
+                  aria-expanded={isMobileMenuOpen}
+                >
+                  <span className="sr-only">Ouvrir le menu principal</span>
+                  {isMobileMenuOpen ? (
+                    <X className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </button>
               </div>
             </div>
-                  </div>
-                </div>
+          </div>
+        </div>
       </header>
 
-      {/* Panneau Menu Mobile Animé avec Framer Motion */}
+      {/* Menu Mobile */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -50 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ type: "spring", damping: 30, stiffness: 400 }}
-            className="fixed inset-x-0 top-0 z-40 pt-20 mt-2 origin-top md:hidden mx-4"
+            exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden fixed inset-x-0 top-16 z-40 mx-4 mt-2 origin-top" // Ajusté top-16 car le header scrollé fait 16 = 4rem
           >
-            <div className="rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50 overflow-hidden">
-              <div className="pt-5 pb-6 px-5">
-                <nav className="grid gap-y-4">
-                  {[ { to: '/catalogue', label: 'Catalogue', icon: ShoppingBag }].map((item, index) => (
-                     <motion.div
-                        key={item.to}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.1 + index * 0.05 }}
-                     >
-                       <Link
-                         to={item.to}
-                         className="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50 transition ease-in-out duration-150"
-                         onClick={() => setIsMobileMenuOpen(false)}
-                       >
-                         <item.icon className="flex-shrink-0 h-6 w-6 text-deep-green-light" aria-hidden="true" />
-                         <span className="ml-4 text-base font-medium text-gray-900">{item.label}</span>
-                       </Link>
-                     </motion.div>
-                  ))}
-                </nav>
+            <div className="rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y divide-gray-100 overflow-hidden pt-16 pb-4"> {/* Ajout pt pour espace sous header */}
+              <div className="px-5 pt-2 pb-6 space-y-3">
+                <Link to="/catalogue" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Catalogue</Link>
+                {/* <Link to="/comment-ca-marche" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Comment ça marche?</Link> */}
               </div>
-              <div className="py-6 px-5 space-y-6">
-                 {isLoggedIn ? (
-                   <>
-                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-                       <Link to="/profile" className="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
-                         <User className="flex-shrink-0 h-6 w-6 text-deep-green-light" aria-hidden="true" />
-                         <span className="ml-4 text-base font-medium text-gray-900">Mon Profil</span>
-                       </Link>
-                     </motion.div>
-                     {user.role !== 'chef' && (
-                       <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.35 }}>
-                          <Link to="/register?role=chef" className="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
-                            <ChefHat className="flex-shrink-0 h-6 w-6 text-deep-green-light" aria-hidden="true" />
-                            <span className="ml-4 text-base font-medium text-gray-900">Devenir Chef</span>
-                          </Link>
-                       </motion.div>
-                     )}
-                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
-                       <button onClick={handleLogout} className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-600 hover:bg-red-700">
-                         <LogOut className="h-5 w-5 mr-2" /> Se déconnecter
-                       </button>
-                      </motion.div>
-                   </>
-            ) : (
-              <>
-                      <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-                       <Link to="/register" className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-deep-green hover:bg-deep-green/90" onClick={() => setIsMobileMenuOpen(false)}>
-                         S'inscrire
-                       </Link>
-                      </motion.div>
-                      <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.35 }}>
-                       <p className="mt-6 text-center text-base font-medium text-gray-500">
-                         Déjà membre?
-                         <Link to="/login" className="text-deep-green-light hover:text-deep-green ml-2" onClick={() => setIsMobileMenuOpen(false)}>
-                  Se connecter
-                </Link>
-                       </p>
-                      </motion.div>
-              </>
-            )}
-          </div>
-        </div>
+              <div className="pt-4 pb-3 border-t border-gray-200">
+                {isLoggedIn ? (
+                  <>
+                    <div className="flex items-center px-5 mb-3">
+                      <div className="flex-shrink-0">
+                        <img className="h-10 w-10 rounded-full object-cover" src={user.avatar || 'https://via.placeholder.com/150'} alt="" />
+                      </div>
+                      <div className="ml-3">
+                        <div className="text-base font-medium text-gray-800">{user.name}</div>
+                        <div className="text-sm font-medium text-gray-500">{user.email}</div>
+                      </div>
+                    </div>
+                    <div className="px-2 space-y-1">
+                      <Link to="/profile" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Mon Profil</Link>
+                      {user.role !== 'chef' && (
+                         <Link to="/register?role=chef" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Devenir Chef</Link>
+                      )}
+                      <button onClick={handleLogout} className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:text-red-700 hover:bg-red-50">
+                        Se déconnecter
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="px-2 space-y-2">
+                    <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Se connecter</Link>
+                    <Link to="/register" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>S'inscrire</Link>
+                  </div>
+                )}
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
