@@ -248,39 +248,56 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden fixed inset-x-0 top-16 z-40 mx-4 mt-2 origin-top" // Ajusté top-16 car le header scrollé fait 16 = 4rem
+            className="md:hidden fixed inset-x-0 top-16 z-40 mx-4 mt-2 origin-top" 
           >
-            <div className="rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y divide-gray-100 overflow-hidden pt-16 pb-4"> {/* Ajout pt pour espace sous header */}
-              <div className="px-5 pt-2 pb-6 space-y-3">
-                <Link to="/catalogue" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Catalogue</Link>
-                {/* <Link to="/comment-ca-marche" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Comment ça marche?</Link> */}
+            <div className="rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y divide-gray-100 overflow-hidden py-4"> 
+              <div className="px-5 py-4 space-y-3"> 
+                <Link 
+                  to="/catalogue" 
+                  className="-m-3 p-3 flex items-center rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                   <ShoppingBag className="flex-shrink-0 h-6 w-6 text-deep-green-light mr-4" aria-hidden="true" />
+                   Catalogue
+                 </Link>
               </div>
-              <div className="pt-4 pb-3 border-t border-gray-200">
+              <div className="px-5 py-5"> 
                 {isLoggedIn ? (
                   <>
-                    <div className="flex items-center px-5 mb-3">
+                    <div className="flex items-center mb-4"> 
                       <div className="flex-shrink-0">
                         <img className="h-10 w-10 rounded-full object-cover" src={user.avatar || 'https://via.placeholder.com/150'} alt="" />
                       </div>
                       <div className="ml-3">
-                        <div className="text-base font-medium text-gray-800">{user.name}</div>
-                        <div className="text-sm font-medium text-gray-500">{user.email}</div>
+                        <div className="text-base font-medium text-deep-green">{user.name}</div>
+                        <div className="text-sm font-medium text-deep-green/80">{user.email}</div>
                       </div>
                     </div>
-                    <div className="px-2 space-y-1">
-                      <Link to="/profile" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Mon Profil</Link>
+                    <div className="space-y-1">
+                      <Link to="/profile" className="block -m-3 p-3 rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" onClick={() => setIsMobileMenuOpen(false)}>
+                         <User className="inline h-5 w-5 mr-3 text-deep-green-light" />Mon Profil
+                      </Link>
                       {user.role !== 'chef' && (
-                         <Link to="/register?role=chef" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Devenir Chef</Link>
+                         <Link to="/register?role=chef" className="block -m-3 p-3 rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" onClick={() => setIsMobileMenuOpen(false)}>
+                            <ChefHat className="inline h-5 w-5 mr-3 text-deep-green-light" />Devenir Chef
+                         </Link>
                       )}
-                      <button onClick={handleLogout} className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:text-red-700 hover:bg-red-50">
-                        Se déconnecter
+                      <button 
+                        onClick={handleLogout} 
+                        className="block w-full text-left -m-3 p-3 rounded-lg text-base font-medium text-red-600 hover:bg-red-50 hover:text-red-700 transition ease-in-out duration-150 group"
+                      >
+                         <LogOut className="inline h-5 w-5 mr-3 text-red-500 group-hover:text-red-600" />Se déconnecter
                       </button>
                     </div>
                   </>
                 ) : (
-                  <div className="px-2 space-y-2">
-                    <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Se connecter</Link>
-                    <Link to="/register" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>S'inscrire</Link>
+                  <div className="space-y-2">
+                    <Link to="/login" className="block -m-3 p-3 rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" onClick={() => setIsMobileMenuOpen(false)}>
+                       <LogIn className="inline h-5 w-5 mr-3 text-deep-green-light" />Se connecter
+                    </Link>
+                    <Link to="/register" className="block -m-3 p-3 rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" onClick={() => setIsMobileMenuOpen(false)}>
+                       <ArrowRight className="inline h-5 w-5 mr-3 text-deep-green-light" />S'inscrire
+                     </Link>
                   </div>
                 )}
               </div>
