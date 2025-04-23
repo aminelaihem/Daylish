@@ -244,11 +244,13 @@ export function Header() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden fixed inset-x-0 top-16 z-40 mx-4 mt-2 origin-top" 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }} 
+            transition={{ duration: 0.3 }} 
+            className={`md:hidden fixed inset-x-0 top-16 z-40 mx-4 origin-top 
+                       transition-transform duration-300 ease-in-out transform-gpu 
+                       ${!useEffectiveScrolled ? 'translate-y-8' : 'translate-y-0'}`}
           >
             <div className="rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y divide-gray-100 overflow-hidden py-4"> 
               <div className="px-5 py-4 space-y-3"> 
