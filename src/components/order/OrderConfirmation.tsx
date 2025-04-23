@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Clock, MapPin, CreditCard, Loader, ChefHat, AlertCircle, ArrowLeft, Plus, Minus, Info } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // Mocks (remplacer par vos types réels si différents)
-interface Meal { id: string; title: string; image: string; price: number; preparationTime: number; allergens: string[]; distance?: number; }
+interface Meal { id: string; title: string; image: string; price: number; preparationTime: number; allergens: string[]; distance?: number; availablePortions: number; }
 interface Chef { id: string; name: string; avatar: string; rating: number; reviewCount: number; }
 
 // Sous-composants pour la clarté
@@ -78,36 +78,44 @@ const MealSummary = ({ meal, chef }: { meal: Meal, chef: Chef }) => (
   </motion.div>
 );
 
-const QuantitySelector = ({ quantity, setQuantity }: { quantity: number, setQuantity: (q: number) => void }) => (
-  <motion.div 
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: 0.2 }}
-    className="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border border-gray-100"
->
-    <span className="text-base font-medium text-deep-green">Quantité</span>
-    <div className="flex items-center space-x-3">
-      <button
-        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-        disabled={quantity <= 1}
-        className="p-1.5 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-      >
-        <Minus className="h-4 w-4" />
-      </button>
-      <span className="text-lg font-bold text-deep-green w-8 text-center">{quantity}</span>
-      <button
-        onClick={() => setQuantity(quantity + 1)}
-        className="p-1.5 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
-      >
-        <Plus className="h-4 w-4" />
-      </button>
-    </div>
-  </motion.div>
-);
+const QuantitySelector = ({ quantity, setQuantity, maxQuantity }: { quantity: number, setQuantity: (q: number) => void, maxQuantity: number }) => {
+  const canIncrease = quantity < maxQuantity;
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      className="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border border-gray-100 relative"
+    >
+      <span className="text-base font-medium text-deep-green">Quantité</span>
+      <div className="flex items-center space-x-3">
+        <button
+          onClick={() => setQuantity(Math.max(1, quantity - 1))}
+          disabled={quantity <= 1}
+          className="p-1.5 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          <Minus className="h-4 w-4" />
+        </button>
+        <span className="text-lg font-bold text-deep-green w-8 text-center">{quantity}</span>
+        <button
+          onClick={() => { if (canIncrease) setQuantity(quantity + 1); }}
+          disabled={!canIncrease}
+          className={`p-1.5 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 ${!canIncrease ? 'opacity-50 cursor-not-allowed' : ''} transition-colors`}
+        >
+          <Plus className="h-4 w-4" />
+        </button>
+      </div>
+       {!canIncrease && (
+         <span className="absolute right-4 -bottom-5 text-xs text-orange">Maximum {maxQuantity} portions</span>
+       )}
+    </motion.div>
+  );
+};
 
 const PriceBreakdown = ({ meal, price, quantity }: { meal: Meal, price: number, quantity: number }) => {
   const subtotal = price * quantity;
-  const serviceFee = 0.99; // Exemple
+  const serviceFee = 0.99;
   const total = subtotal + serviceFee;
 
   return (
@@ -116,7 +124,7 @@ const PriceBreakdown = ({ meal, price, quantity }: { meal: Meal, price: number, 
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
       className="p-6 bg-gradient-to-br from-beige/10 to-white rounded-2xl shadow-sm border border-gray-100 space-y-3"
-  >
+    >
       <h3 className="text-lg font-semibold text-deep-green mb-4">Récapitulatif</h3>
       <div className="flex justify-between text-sm text-deep-green/80">
         <span>{meal.title} x {quantity}</span>
@@ -142,7 +150,6 @@ const PaymentSection = ({ isProcessing, handlePayment }: { isProcessing: boolean
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay: 0.4 }}
-    className="mt-8"
   >
     {/* Placeholder pour la sélection et la saisie des infos de paiement */}
     <div className="p-6 bg-white rounded-2xl shadow-sm border border-gray-100 mb-6">
@@ -188,23 +195,25 @@ export function OrderConfirmation() {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Utiliser des types plus robustes et des valeurs par défaut
-  const { meal, chef } = (location.state as { meal: Meal, chef: Chef }) || {};
+  const { meal, chef } = (location.state as { meal: Meal, chef: Chef }) || {}; 
   const [quantity, setQuantity] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
-  const currentStep = 2; // Fixé à l'étape Paiement pour cette page
+  const currentStep = 2;
 
-  // Sécurité: Rediriger si données manquantes
+  useEffect(() => {
+    if (meal && quantity > meal.availablePortions) {
+      setQuantity(meal.availablePortions);
+    }
+  }, [meal, quantity]);
+
   if (!meal || !chef) {
     console.error("Données de commande manquantes, redirection...");
-    // Idéalement, afficher un message à l'utilisateur avant de rediriger
-    useEffect(() => { navigate('/catalogue'); }, [navigate]);
+    navigate('/catalogue'); 
     return null; 
   }
-
+  
   const handlePayment = async () => {
     setIsProcessing(true);
-    // Simulation
     setTimeout(() => {
       setIsProcessing(false);
       navigate('/order-success', {
@@ -213,7 +222,7 @@ export function OrderConfirmation() {
           meal,
           chef,
           quantity,
-          total: (meal.price * quantity + 0.99) // Recalculer le total ici
+          total: (meal.price * quantity + 0.99)
         }
       });
     }, 2500);
@@ -223,7 +232,7 @@ export function OrderConfirmation() {
     <div className="min-h-screen bg-gradient-to-br from-beige/20 via-white to-beige/10 pt-24 pb-16 font-sans">
       <div className="max-w-4xl mx-auto px-4">
         <motion.button
-          onClick={() => navigate(-1)} // Retour page précédente
+          onClick={() => navigate(-1)}
           className="flex items-center text-sm text-deep-green hover:text-deep-green-light mb-6 group"
           whileHover={{ x: -3 }}
         >
@@ -237,7 +246,7 @@ export function OrderConfirmation() {
           {/* Colonne Gauche: Détails */}
           <div className="space-y-6">
             <MealSummary meal={meal} chef={chef} />
-            <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
+            <QuantitySelector quantity={quantity} setQuantity={setQuantity} maxQuantity={meal.availablePortions} />
           </div>
 
           {/* Colonne Droite: Paiement */}
