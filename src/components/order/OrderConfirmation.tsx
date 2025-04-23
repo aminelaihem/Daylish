@@ -208,10 +208,10 @@ export function OrderConfirmation() {
 
   if (!meal || !chef) {
     console.error("Données de commande manquantes, redirection...");
-    navigate('/catalogue'); 
-    return null; 
+    navigate('/catalogue');
+    return null;
   }
-  
+
   const handlePayment = async () => {
     setIsProcessing(true);
     setTimeout(() => {

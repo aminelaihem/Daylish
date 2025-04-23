@@ -133,12 +133,12 @@ export function Header() {
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
               <NavLink to="/catalogue" isScrolled={useEffectiveScrolled}>Catalogue</NavLink>
               {/* <NavLink to="/comment-ca-marche">Comment ça marche?</NavLink> */}
-            </nav>
+          </nav>
 
             {/* Actions Utilisateur Desktop & Bouton Mobile */} 
             <div className="flex items-center">
               <div className="hidden md:flex items-center space-x-4">
-                {isLoggedIn ? (
+            {isLoggedIn ? (
                   <Menu as="div" className="relative inline-block text-left">
                     <div>
                       <Menu.Button className={`flex items-center space-x-2 p-1 rounded-full ${adaptiveHoverBg} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green-light transition-colors group`}>
@@ -254,7 +254,7 @@ export function Header() {
           >
             <div className="rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y divide-gray-100 overflow-hidden py-4"> 
               <div className="px-5 py-4 space-y-3"> 
-                <Link 
+                <Link
                   to="/catalogue" 
                   className="-m-3 p-3 flex items-center rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" 
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -282,7 +282,7 @@ export function Header() {
                       {user.role !== 'chef' && (
                          <Link to="/register?role=chef" className="block -m-3 p-3 rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" onClick={() => setIsMobileMenuOpen(false)}>
                             <ChefHat className="inline h-5 w-5 mr-3 text-deep-green-light" />Devenir Chef
-                         </Link>
+                </Link>
                       )}
                       <button 
                         onClick={handleLogout} 
@@ -301,9 +301,9 @@ export function Header() {
                        <ArrowRight className="inline h-5 w-5 mr-3 text-deep-green-light" />S'inscrire
                      </Link>
                   </div>
-                )}
-              </div>
-            </div>
+            )}
+          </div>
+        </div>
           </motion.div>
         )}
       </AnimatePresence>
