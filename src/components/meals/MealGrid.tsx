@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MealCard } from './MealCard';
 import type { Meal } from '@/types/meal';
 import type { Chef } from '@/types/chef';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Filter, ChevronDown, ChevronUp } from 'lucide-react';
 
 const SAMPLE_MEALS: Meal[] = [
   {
@@ -160,29 +161,185 @@ const SAMPLE_CHEFS = {
   }
 };
 
+const categories = [
+  { id: 'all', name: 'Tous les plats' },
+  { id: 'popular', name: 'Populaires' },
+  { id: 'new', name: 'Nouveautés' },
+  { id: 'vegan', name: 'Vegan' },
+  { id: 'dessert', name: 'Desserts' }
+];
+
+const filters = [
+  { id: 'rating', name: 'Meilleures notes' },
+  { id: 'price', name: 'Prix' },
+  { id: 'distance', name: 'Distance' },
+  { id: 'time', name: 'Temps de préparation' }
+];
+
 export function MealGrid() {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedFilter, setSelectedFilter] = useState('rating');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  const filteredMeals = SAMPLE_MEALS.filter(meal => {
+    const matchesCategory = selectedCategory === 'all' || 
+      (selectedCategory === 'popular' && meal.isPopular) ||
+      (selectedCategory === 'new' && meal.isNew) ||
+      (selectedCategory === 'vegan' && meal.category === 'Vegan') ||
+      (selectedCategory === 'dessert' && meal.category === 'Dessert');
+    
+    const matchesSearch = meal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      meal.description.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  }).sort((a, b) => {
+    switch (selectedFilter) {
+      case 'rating':
+        return b.rating - a.rating;
+      case 'price':
+        return a.price - b.price;
+      case 'distance':
+        return (a.distance || 0) - (b.distance || 0);
+      case 'time':
+        return a.preparationTime - b.preparationTime;
+      default:
+        return 0;
+    }
+  });
+
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {SAMPLE_MEALS.map((meal, index) => (
+      {/* Barre de recherche et filtres */}
+      <div className="mb-8 space-y-4">
+        <motion.div
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="relative"
+        >
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Rechercher un plat..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow focus:border-transparent transition-all duration-300"
+          />
+        </motion.div>
+
+        <div className="flex flex-col sm:flex-row gap-4">
+          {/* Catégories */}
           <motion.div
-            key={meal.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="flex-1 flex gap-2 overflow-x-auto pb-2"
           >
-            <MealCard 
-              meal={meal} 
-              chef={SAMPLE_CHEFS[meal.chefId as keyof typeof SAMPLE_CHEFS]}
-            />
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${
+                  selectedCategory === category.id
+                    ? 'bg-gradient-to-r from-yellow to-orange-400 text-deep-green'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {category.name}
+              </button>
+            ))}
           </motion.div>
-        ))}
+
+          {/* Filtres */}
+          <motion.div
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="relative"
+          >
+            <button
+              onClick={() => setIsFiltersOpen(!isFiltersOpen)}
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all duration-300"
+            >
+              <Filter className="h-4 w-4" />
+              <span className="text-sm font-medium">Trier par</span>
+              {isFiltersOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </button>
+
+            <AnimatePresence>
+              {isFiltersOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-10"
+                >
+                  {filters.map((filter) => (
+                    <button
+                      key={filter.id}
+                      onClick={() => {
+                        setSelectedFilter(filter.id);
+                        setIsFiltersOpen(false);
+                      }}
+                      className={`w-full px-4 py-2 text-left text-sm transition-colors duration-200 ${
+                        selectedFilter === filter.id
+                          ? 'bg-gradient-to-r from-yellow/10 to-orange-400/10 text-deep-green'
+                          : 'text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      {filter.name}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </div>
       </div>
+
+      {/* Grille de plats */}
+      <motion.div 
+        layout
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
+        <AnimatePresence>
+          {filteredMeals.map((meal, index) => (
+            <motion.div
+              key={meal.id}
+              layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+            >
+              <MealCard 
+                meal={meal} 
+                chef={SAMPLE_CHEFS[meal.chefId as keyof typeof SAMPLE_CHEFS]}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Message si aucun résultat */}
+      {filteredMeals.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-12"
+        >
+          <p className="text-gray-500 text-lg">
+            Aucun plat ne correspond à votre recherche
+          </p>
+        </motion.div>
+      )}
     </motion.div>
   );
 }
