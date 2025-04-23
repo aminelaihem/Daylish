@@ -55,10 +55,20 @@ export function MealCard({ meal, chef }: MealCardProps) {
             <span className="sr-only">Ajouter aux favoris</span>
           </button>
 
-          <div className="absolute top-3 left-3">
+          <div className="absolute top-3 left-3 flex flex-col gap-2">
             <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-deep-green shadow-md">
               {meal.category}
             </span>
+            {meal.isPopular && (
+              <span className="bg-gradient-to-r from-yellow to-orange-400 px-3 py-1 rounded-full text-xs font-bold text-deep-green shadow-md">
+                Populaire
+              </span>
+            )}
+            {meal.isNew && (
+              <span className="bg-deep-green-light px-3 py-1 rounded-full text-xs font-bold text-white shadow-md">
+                Nouveau
+              </span>
+            )}
           </div>
           
           <div className="absolute bottom-3 left-3 flex space-x-2">
@@ -69,6 +79,10 @@ export function MealCard({ meal, chef }: MealCardProps) {
             <span className="bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs flex items-center text-deep-green shadow-sm">
               <Clock className="h-3.5 w-3.5 mr-1 text-orange flex-shrink-0" />
               {meal.preparationTime} min
+            </span>
+            <span className="bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs flex items-center text-deep-green shadow-sm">
+              <Star className="h-3.5 w-3.5 mr-1 text-yellow fill-current flex-shrink-0" />
+              {meal.rating}
             </span>
           </div>
         </div>

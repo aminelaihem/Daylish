@@ -11,4 +11,7 @@ export interface Meal {
   preparationTime: number;
   availablePortions: number;
   distance?: number;
+  rating: number;
+  isPopular: boolean;
+  isNew: boolean;
 } 

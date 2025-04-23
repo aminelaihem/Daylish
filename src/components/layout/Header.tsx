@@ -114,12 +114,12 @@ export function Header() {
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
               <NavLink to="/catalogue" isScrolled={isScrolled}>Catalogue</NavLink>
               {/* <NavLink to="/comment-ca-marche">Comment ça marche?</NavLink> */}
-            </nav>
+          </nav>
 
             {/* Actions Utilisateur Desktop & Bouton Mobile */} 
             <div className="flex items-center">
               <div className="hidden md:flex items-center space-x-4">
-                {isLoggedIn ? (
+            {isLoggedIn ? (
                   <Menu as="div" className="relative inline-block text-left">
                     <div>
                       <Menu.Button className={`flex items-center space-x-2 p-1 rounded-full ${adaptiveHoverBg} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-green-light transition-colors group`}>
@@ -159,7 +159,7 @@ export function Header() {
                   </Menu>
                 ) : (
                   <div className="flex items-center space-x-3">
-                    <Link 
+                    <Link
                       to="/login" 
                       className={`group relative flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-transparent transition-all duration-200 ease-out ${isScrolled ? 'text-deep-green/80 hover:text-deep-green hover:bg-deep-green/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
                     >
@@ -214,8 +214,8 @@ export function Header() {
                  </button>
               </div>
             </div>
-          </div>
-        </div>
+                  </div>
+                </div>
       </header>
 
       {/* Panneau Menu Mobile Animé avec Framer Motion */}
@@ -273,8 +273,8 @@ export function Header() {
                        </button>
                       </motion.div>
                    </>
-                 ) : (
-                   <>
+            ) : (
+              <>
                       <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
                        <Link to="/register" className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-deep-green hover:bg-deep-green/90" onClick={() => setIsMobileMenuOpen(false)}>
                          S'inscrire
@@ -284,14 +284,14 @@ export function Header() {
                        <p className="mt-6 text-center text-base font-medium text-gray-500">
                          Déjà membre?
                          <Link to="/login" className="text-deep-green-light hover:text-deep-green ml-2" onClick={() => setIsMobileMenuOpen(false)}>
-                           Se connecter
-                         </Link>
+                  Se connecter
+                </Link>
                        </p>
                       </motion.div>
-                   </>
-                 )}
-              </div>
-            </div>
+              </>
+            )}
+          </div>
+        </div>
           </motion.div>
         )}
       </AnimatePresence>
