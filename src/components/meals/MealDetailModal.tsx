@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, Tab } from '@headlessui/react';
 import { X, ChefHat, Star, Clock, MapPin, ShoppingBag, AlertCircle } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import type { Meal } from '@/types/meal';
 import type { Chef } from '@/types/chef';
 
@@ -22,7 +22,46 @@ const sampleImages = [
 
 export function MealDetailModal({ isOpen, onClose, meal, chef, handleOrderClick }: MealDetailModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
   const images = [meal.image, ...sampleImages]; // Combiner l'image principale avec les images supplémentaires
+
+  const paginate = (newIndex: number) => {
+    setDirection(newIndex > currentImageIndex ? 1 : -1);
+    setCurrentImageIndex(newIndex);
+  };
+
+  const handleDragEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    if (info.offset.x < -50 && currentImageIndex < images.length - 1) {
+      setDirection(1);
+      setCurrentImageIndex(currentImageIndex + 1);
+    } else if (info.offset.x > 50 && currentImageIndex > 0) {
+      setDirection(-1);
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  };
+
+  const variants = {
+    enter: (dir: number) => ({
+      x: dir > 0 ? 300 : -300,
+      opacity: 0,
+      scale: 0.95
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.35, ease: [0.4, 0.2, 0.2, 1] }
+    },
+    exit: (dir: number) => ({
+      x: dir < 0 ? 300 : -300,
+      opacity: 0,
+      scale: 0.95,
+      transition: { duration: 0.25 }
+    })
+  };
 
   return (
     <AnimatePresence>
@@ -66,12 +105,26 @@ export function MealDetailModal({ isOpen, onClose, meal, chef, handleOrderClick 
 
               {/* Carrousel */}
               <div className="relative aspect-[16/9] bg-gray-100">
-                <div className="absolute inset-0">
-                  <img
-                    src={images[currentImageIndex]}
-                    alt={meal.title}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="absolute inset-0 overflow-hidden">
+                  <AnimatePresence initial={false} custom={direction}>
+                    <motion.img
+                      key={currentImageIndex}
+                      src={images[currentImageIndex]}
+                      alt={meal.title}
+                      className="w-full h-full object-cover"
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={currentImageIndex === 0 || currentImageIndex === images.length - 1 ? 0.2 : 0.5}
+                      onDragEnd={handleDragEnd}
+                      style={{ cursor: 'grab', touchAction: 'pan-y' }}
+                      custom={direction}
+                      variants={variants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
+                  </AnimatePresence>
                 </div>
                 
                 {/* Navigation Carrousel */}
@@ -79,7 +132,7 @@ export function MealDetailModal({ isOpen, onClose, meal, chef, handleOrderClick 
                   {images.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setCurrentImageIndex(index)}
+                      onClick={() => paginate(index)}
                       className={`w-2 h-2 rounded-full transition-all ${
                         currentImageIndex === index
                           ? 'bg-white w-6'
