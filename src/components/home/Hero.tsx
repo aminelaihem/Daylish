@@ -14,11 +14,13 @@ export function Hero() {
             className="absolute left-1/2 -translate-x-1/2 -top-16 object-cover z-10 drop-shadow-xl select-none pointer-events-none"
           />
           <h1 className="font-display text-center text-5xl sm:text-6xl md:text-7xl leading-tight font-normal mb-6 mt-10 relative z-20" style={{ color: '#053126' }}>
-            Saveurs d'ici,<br />cuisinées pour vous
+            Des plats faits maison,<br />
+            tout près de vous
           </h1>
         </div>
         <p className="font-sans text-lg sm:text-xl text-center max-w-2xl mb-4" style={{ color: '#053126' }}>
-          Explorez une variété de plats authentiques, mijotés avec passion par les talents culinaires de votre voisinage.
+          Sur Daylish, des cuisiniers passionnés de votre quartier partagent leurs meilleures recettes.<br />
+          Commandez en quelques clics et savourez des plats authentiques, préparés avec soin et proximité.
         </p>
         <div className="w-full flex justify-center">
           <Link
