@@ -60,7 +60,7 @@ export function MealCard({ meal, chef }: MealCardProps) {
               {meal.category}
             </span>
             {meal.isPopular && (
-              <span className="bg-gradient-to-r from-yellow to-orange-400 px-3 py-1 rounded-full text-xs font-bold text-deep-green shadow-md">
+              <span className="bg-yellow px-3 py-1 rounded-full text-xs font-bold text-deep-green shadow-md">
                 Populaire
               </span>
             )}

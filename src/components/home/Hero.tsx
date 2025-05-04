@@ -22,7 +22,7 @@ export function Hero() {
           Sur Daylish, des cuisiniers passionnés de votre quartier partagent leurs meilleures recettes.<br />
           Commandez en quelques clics et savourez des plats authentiques, préparés avec soin et proximité.
         </p>
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center mt-8">
           <Link
             to="/catalogue"
             style={{

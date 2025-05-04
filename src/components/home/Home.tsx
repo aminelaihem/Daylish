@@ -1,10 +1,8 @@
 import React from 'react';
 import { Hero } from './Hero';
-import { Benefits } from './Benefits';
-import { Testimonials } from './Testimonials';
-import { MealCard } from '../meals/MealCard';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChefHat } from 'lucide-react';
+import { MealCard } from '../meals/MealCard';
 
 // Simuler des données pour la section des plats populaires
 const popularMeals = [
@@ -86,13 +84,13 @@ export function Home() {
       <Hero />
       
       {/* Section Plats Populaires */}
-      <section className="py-24 relative overflow-hidden">
+      <section className="pb-24 relative overflow-hidden bg-[#FFF9EF]">
         {/* Effet de fond subtil */}
         <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="flex justify-between items-center mb-16">
-            <h2 className="section-title text-deep-green text-left relative">
+            <h2 className="section-title text-deep-green text-left relative" style={{ color: '#053126' }}>
               Les pépites du quartier
               <span className="absolute -bottom-2 left-0 w-24 h-1 bg-yellow rounded-full" />
             </h2>
@@ -121,10 +119,6 @@ export function Home() {
         </div>
       </section>
 
-      <Benefits />
-      
-      <Testimonials />
-      
       {/* Section Appel à l'Action - Chef */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
