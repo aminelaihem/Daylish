@@ -145,10 +145,12 @@ export function Home() {
             </p>
             <Link
               to="/register"
-              className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold rounded-xl bg-gradient-to-r from-yellow/90 to-orange-400/90 text-orange-800 hover:from-yellow hover:to-orange-400 shadow-lg hover:shadow-xl hover:shadow-yellow/20 transform transition-all duration-300 ease-out hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-green focus:ring-yellow/50 active:scale-[0.98] group"
+              className="group relative inline-flex items-center justify-center font-bold font-sans rounded-xl overflow-hidden bg-[#FFEDCB] text-deep-green shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:ring-2 focus:ring-deep-green-light hover:bg-[#FFEDCB] px-[100px] py-[12px] text-lg"
             >
-              <ChefHat className="mr-3 h-5 w-5 text-orange-800 transition-transform duration-300 group-hover:rotate-[-12deg]" />
-              Devenir Chef Partenaire
+              {/* Effet Shimmer */}
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#FFEDCB]/60 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out opacity-50 group-hover:opacity-100"></span>
+              <ChefHat className="mr-3 h-5 w-5 text-deep-green transition-transform duration-300 group-hover:rotate-[-12deg] relative z-10" />
+              <span className="relative z-10">Devenir Chef Partenaire</span>
             </Link>
           </div>
         </div>
