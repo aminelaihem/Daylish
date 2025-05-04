@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu as MenuIcon, X, User, LogOut, ChefHat, ShoppingBag, ArrowRight, LogIn } from 'lucide-react';
+import { Menu as MenuIcon, X, User, LogOut, ChefHat, ShoppingBag, ArrowRight, LogIn, Home } from 'lucide-react';
 import { Menu, Transition } from '@headlessui/react'; // Pour le dropdown Desktop
 import { motion, AnimatePresence } from 'framer-motion'; // Pour l'animation du menu mobile
 
@@ -91,6 +91,21 @@ const DropdownMenuItem = ({ children, onClick, icon: Icon, isDanger = false }: {
   </Menu.Item>
 );
 
+// Composant SVG personnalisé pour 'Nos plats'
+const NosPlatsIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 18" fill="none" className="inline-block align-middle">
+    <path d="M0 18V6L8 0L16 6V18H0ZM2 16H14V7L8 2.5L2 7V16ZM6 15H7V11C7.41667 11 7.77067 10.854 8.062 10.562C8.354 10.2707 8.5 9.91667 8.5 9.5V6.5H7.5V9.5H7V6.5H6V9.5H5.5V6.5H4.5V9.5C4.5 9.91667 4.646 10.2707 4.938 10.562C5.22933 10.854 5.58333 11 6 11V15ZM10 15H11V6.5C10.45 6.5 9.97933 6.69567 9.588 7.087C9.196 7.479 9 7.95 9 8.5V11.5H10V15Z" fill="#006B60"/>
+  </svg>
+);
+
+// Composant SVG personnalisé pour 'Devenir Chef Partenaire'
+const ChefPartenaireIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20" fill="none" className="inline-block align-middle">
+    <path d="M4.99998 11.5583C4.15495 11.3769 3.41343 10.8743 2.93185 10.1566C2.45027 9.43889 2.26629 8.5622 2.41871 7.71145C2.57113 6.8607 3.04804 6.10241 3.74883 5.59654C4.44963 5.09068 5.31951 4.87679 6.17498 5C6.3855 4.5222 6.6821 4.08719 7.04998 3.71667C7.43703 3.32864 7.89682 3.02078 8.40303 2.81073C8.90924 2.60068 9.45192 2.49255 9.99998 2.49255C10.548 2.49255 11.0907 2.60068 11.5969 2.81073C12.1031 3.02078 12.5629 3.32864 12.95 3.71667C13.3179 4.08719 13.6145 4.5222 13.825 5C14.6805 4.87679 15.5503 5.09068 16.2511 5.59654C16.9519 6.10241 17.4288 6.8607 17.5812 7.71145C17.7337 8.5622 17.5497 9.43889 17.0681 10.1566C16.5865 10.8743 15.845 11.3769 15 11.5583V17.5H4.99998V11.5583Z" stroke="#006B60" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M5 14.1667H15" stroke="#006B60" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
 export function Header() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -110,18 +125,16 @@ export function Header() {
   const isScrolled = scrollPosition > 20; 
   const isOnHomePage = location.pathname === '/';
 
-  // Réintroduire useEffectiveScrolled
+  // Header transparent avant scroll, blanc avec ombre après scroll
   const useEffectiveScrolled = isScrolled || !isOnHomePage;
-
-  // Réutiliser useEffectiveScrolled pour les styles adaptatifs
-  const adaptiveTextColor = useEffectiveScrolled ? 'text-deep-green' : 'text-white';
-  const adaptiveHoverBg = useEffectiveScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/10';
-  const adaptiveBorderColor = useEffectiveScrolled ? 'border-deep-green/50' : 'border-white/50';
-  const adaptiveHoverBorderColor = useEffectiveScrolled ? 'hover:border-deep-green' : 'hover:border-deep-green'; // Garder le hover vert sur le bouton chef dans les 2 cas
+  const adaptiveTextColor = 'text-deep-green';
+  const adaptiveHoverBg = 'hover:bg-gray-100';
+  const adaptiveBorderColor = 'border-deep-green/50';
+  const adaptiveHoverBorderColor = 'hover:border-deep-green';
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${useEffectiveScrolled ? 'h-16 shadow-md bg-white/90 backdrop-blur-lg' : 'h-24 bg-transparent'}`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${useEffectiveScrolled ? 'h-16 shadow-md bg-transparent backdrop-blur-lg' : 'h-24 bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex justify-between items-center h-full">
             {/* Logo Section */}
@@ -130,10 +143,30 @@ export function Header() {
             </div>
 
             {/* Navigation Desktop */} 
-            <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
-              <NavLink to="/catalogue" isScrolled={useEffectiveScrolled}>Catalogue</NavLink>
-              {/* <NavLink to="/comment-ca-marche">Comment ça marche?</NavLink> */}
-          </nav>
+            <nav className="hidden md:flex items-center space-x-6 mx-auto">
+              <NavLink to="/catalogue" isScrolled={true}>
+                <span className="relative flex items-center font-sans font-bold text-deep-green gap-1.5 px-2.5 py-1 rounded-full transition-all duration-300 group focus:ring-2 focus:ring-deep-green-light focus:ring-offset-2 cursor-pointer">
+                  <span className="flex items-center gap-1.5 relative z-10 transition-transform duration-200 group-hover:scale-105">
+                    <NosPlatsIcon />
+                    <span className="relative text-sm">
+                      Nos plats
+                      <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-deep-green rounded-full transition-all duration-300 group-hover:w-full"></span>
+                    </span>
+                  </span>
+                </span>
+              </NavLink>
+              <NavLink to="/register?role=chef" isScrolled={true}>
+                <span className="relative flex items-center font-sans font-bold text-deep-green gap-1.5 px-2.5 py-1 rounded-full transition-all duration-300 group focus:ring-2 focus:ring-deep-green-light focus:ring-offset-2 cursor-pointer">
+                  <span className="flex items-center gap-1.5 relative z-10 transition-transform duration-200 group-hover:scale-105">
+                    <ChefPartenaireIcon />
+                    <span className="relative text-sm">
+                      Devenir Chef Partenaire
+                      <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-deep-green rounded-full transition-all duration-300 group-hover:w-full"></span>
+                    </span>
+                  </span>
+                </span>
+              </NavLink>
+            </nav>
 
             {/* Actions Utilisateur Desktop & Bouton Mobile */} 
             <div className="flex items-center">
@@ -146,10 +179,10 @@ export function Header() {
                         <img
                           src={user.avatar || 'https://via.placeholder.com/150'}
                           alt=""
-                          className={`h-9 w-9 rounded-full object-cover ring-2 ring-offset-1 transition-all duration-300 ${useEffectiveScrolled ? 'ring-deep-green/20 group-hover:ring-deep-green-light' : 'ring-white/20 group-hover:ring-white'}`}
+                          className={`h-9 w-9 rounded-full object-cover ring-2 ring-offset-1 transition-all duration-300 ${adaptiveHoverBg} ${adaptiveHoverBorderColor}`}
                         />
                          {/* Nom caché sur écrans moyens pour laisser place aux boutons */} 
-                        <span className={`text-sm font-medium ${adaptiveTextColor} group-hover:${useEffectiveScrolled ? 'text-deep-green' : 'text-white'} hidden lg:inline transition-colors`}>{user.name}</span>
+                        <span className={`text-sm font-medium ${adaptiveTextColor} group-hover:${adaptiveHoverBorderColor} hidden lg:inline transition-colors`}>{user.name}</span>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -179,44 +212,31 @@ export function Header() {
                   <div className="flex items-center space-x-3">
                     <Link
                       to="/login" 
-                      className={`group relative flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-transparent transition-all duration-200 ease-out ${useEffectiveScrolled ? 'text-deep-green/80 hover:text-deep-green hover:bg-deep-green/5' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
+                      className={`group relative flex items-center px-4 py-2 text-sm font-normal font-sans rounded-lg border border-transparent transition-all duration-200 ease-out text-deep-green bg-transparent hover:bg-deep-green/5 focus:ring-2 focus:ring-deep-green-light hover:scale-105 hover:shadow-lg active:scale-95`}
                     >
-                       <LogIn className={`mr-1.5 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${useEffectiveScrolled ? 'text-deep-green/60' : 'text-white/60'}`} />
-                      Se connecter
+                       <LogIn className="mr-1.5 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-deep-green/60" />
+                      Connexion
                     </Link>
                     <Link 
                        to="/register" 
-                       className="group relative inline-flex items-center px-5 py-2 text-sm font-bold rounded-lg overflow-hidden bg-gradient-to-r from-yellow to-orange-400 text-deep-green shadow-md hover:shadow-lg hover:shadow-yellow/30 transform hover:scale-[1.03] active:scale-[0.99] transition-all duration-200 ease-out"
+                       className="group relative inline-flex items-center px-5 py-2 text-sm font-bold font-sans rounded-xl overflow-hidden bg-[#FFEDCB] text-deep-green shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:ring-2 focus:ring-deep-green-light hover:bg-[#FFEDCB]"
                     >
                        {/* Effet Shimmer */}
-                       <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out opacity-50 group-hover:opacity-100"></span>
-                       <span className="relative z-10">S'inscrire</span>
+                       <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#FFEDCB]/60 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out opacity-50 group-hover:opacity-100"></span>
+                       <span className="relative z-10">Inscription</span>
                        <ArrowRight className="ml-1.5 h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-1 relative z-10" />
                     </Link>
+                    {/* Devenir Chef (si affiché) */}
+                    {isLoggedIn && user.role !== 'chef' && (
+                      <Link 
+                        to="/register?role=chef" 
+                        className="group relative ml-4 px-4 py-2 text-sm font-bold font-sans rounded-lg border border-deep-green text-deep-green bg-white hover:bg-deep-green/5 hover:text-deep-green focus:ring-2 focus:ring-deep-green-light hover:scale-105 hover:shadow-lg active:scale-95 transition-all duration-200 ease-out flex items-center gap-2"
+                      >
+                        <ChefPartenaireIcon />
+                        Devenir Chef
+                      </Link>
+                    )}
                   </div>
-                )}
-                 {/* Bouton Devenir Chef (Amélioré) */}
-                 {isLoggedIn && user.role !== 'chef' && (
-                   <Link 
-                     to="/register?role=chef" 
-                     className={`group relative ml-4 px-4 py-2 text-sm font-medium rounded-lg border overflow-hidden transition-all duration-300 ease-out 
-                       ${useEffectiveScrolled 
-                         ? 'border-deep-green text-deep-green hover:text-white' 
-                         : `${adaptiveBorderColor} text-white/90 hover:text-deep-green ${adaptiveHoverBorderColor}`}` // hover:text-deep-green dans les 2 cas
-                    }
-                    >
-                      {/* Fond animé au survol */}
-                      <span className={`absolute inset-0 w-full h-full transition-colors duration-300 ease-out 
-                        ${useEffectiveScrolled 
-                          ? 'bg-deep-green opacity-0 group-hover:opacity-100' 
-                          : 'bg-deep-green opacity-0 group-hover:opacity-100'}` // Fond toujours deep-green au survol
-                      }>
-                      </span>
-                      <span className="relative flex items-center">
-                         <ChefHat className="inline h-4 w-4 mr-1.5 -mt-px transition-transform duration-300 ease-in-out group-hover:rotate-[-12deg]" />
-                         Devenir Chef
-                      </span>
-                   </Link>
                 )}
               </div>
 
@@ -250,7 +270,7 @@ export function Header() {
             transition={{ duration: 0.3 }} 
             className={`md:hidden fixed inset-x-0 top-16 z-40 mx-4 origin-top 
                        transition-transform duration-300 ease-in-out transform-gpu 
-                       ${!useEffectiveScrolled ? 'translate-y-8' : 'translate-y-0'}`}
+                       ${adaptiveTextColor === 'text-deep-green' ? 'translate-y-0' : 'translate-y-8'}`}
           >
             <div className="rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y divide-gray-100 overflow-hidden py-4"> 
               <div className="px-5 py-4 space-y-3"> 
@@ -281,7 +301,7 @@ export function Header() {
                       </Link>
                       {user.role !== 'chef' && (
                          <Link to="/register?role=chef" className="block -m-3 p-3 rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" onClick={() => setIsMobileMenuOpen(false)}>
-                            <ChefHat className="inline h-5 w-5 mr-3 text-deep-green-light" />Devenir Chef
+                            <ChefPartenaireIcon />Devenir Chef
                 </Link>
                       )}
                       <button 
