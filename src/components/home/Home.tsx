@@ -5,7 +5,6 @@ import { Testimonials } from './Testimonials';
 import { MealCard } from '../meals/MealCard';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChefHat } from 'lucide-react';
-import { Meal } from '@/types/meal';
 
 // Simuler des données pour la section des plats populaires
 const popularMeals = [
@@ -21,7 +20,10 @@ const popularMeals = [
     category: 'Plat principal',
     preparationTime: 45,
     availablePortions: 8,
-    distance: 1.2
+    distance: 1.2,
+    rating: 4.9,
+    isPopular: true,
+    isNew: false
   },
   {
     id: '2',
@@ -35,7 +37,10 @@ const popularMeals = [
     category: 'Végétarien',
     preparationTime: 30,
     availablePortions: 6,
-    distance: 0.8
+    distance: 0.8,
+    rating: 4.7,
+    isPopular: true,
+    isNew: true
   },
   {
     id: '3',
@@ -49,7 +54,10 @@ const popularMeals = [
     category: 'Plat principal',
     preparationTime: 60,
     availablePortions: 5,
-    distance: 1.5
+    distance: 1.5,
+    rating: 4.8,
+    isPopular: true,
+    isNew: false
   }
 ];
 
@@ -104,7 +112,7 @@ export function Home() {
                 className="relative group hover:scale-[1.02] transition-all duration-300 border-b-4 border-transparent group-hover:border-yellow"
               >
                 <MealCard 
-                  meal={meal as Meal} 
+                  meal={meal} 
                   chef={sampleChefs[meal.chefId as keyof typeof sampleChefs]}
                 />
               </div>
