@@ -268,8 +268,8 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.2 } }} 
             transition={{ duration: 0.3 }} 
-            className={`md:hidden fixed inset-x-0 top-16 z-40 mx-4 origin-top 
-                       transition-transform duration-300 ease-in-out transform-gpu 
+            className={`md:hidden fixed inset-x-0 ${useEffectiveScrolled ? 'top-16' : 'top-24'} z-40 mx-4 origin-top 
+                       transition-all duration-300 ease-in-out transform-gpu 
                        ${adaptiveTextColor === 'text-deep-green' ? 'translate-y-0' : 'translate-y-8'}`}
           >
             <div className="rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y divide-gray-100 overflow-hidden py-4"> 
@@ -279,9 +279,17 @@ export function Header() {
                   className="-m-3 p-3 flex items-center rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" 
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                   <ShoppingBag className="flex-shrink-0 h-6 w-6 text-deep-green-light mr-4" aria-hidden="true" />
-                   Catalogue
+                   <NosPlatsIcon />
+                   <span className="ml-3">Nos plats</span>
                  </Link>
+                <Link
+                  to="/register?role=chef"
+                  className="-m-3 p-3 flex items-center rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <ChefPartenaireIcon />
+                  <span className="ml-3">Devenir Chef Partenaire</span>
+                </Link>
               </div>
               <div className="px-5 py-5"> 
                 {isLoggedIn ? (
@@ -315,10 +323,10 @@ export function Header() {
                 ) : (
                   <div className="space-y-2">
                     <Link to="/login" className="block -m-3 p-3 rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" onClick={() => setIsMobileMenuOpen(false)}>
-                       <LogIn className="inline h-5 w-5 mr-3 text-deep-green-light" />Se connecter
+                       <LogIn className="inline h-5 w-5 mr-3 text-deep-green-light" />Connexion
                     </Link>
-                    <Link to="/register" className="block -m-3 p-3 rounded-lg text-base font-medium text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" onClick={() => setIsMobileMenuOpen(false)}>
-                       <ArrowRight className="inline h-5 w-5 mr-3 text-deep-green-light" />S'inscrire
+                    <Link to="/register" className="block -m-3 p-3 rounded-lg text-base font-bold text-deep-green hover:bg-deep-green/5 transition ease-in-out duration-150" onClick={() => setIsMobileMenuOpen(false)}>
+                       <ArrowRight className="inline h-5 w-5 mr-3 text-deep-green-light" />Inscription
                      </Link>
                   </div>
             )}
