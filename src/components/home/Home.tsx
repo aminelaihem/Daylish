@@ -5,6 +5,7 @@ import { Testimonials } from './Testimonials';
 import { MealCard } from '../meals/MealCard';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChefHat } from 'lucide-react';
+import { Meal } from '@/types/meal';
 
 // Simuler des données pour la section des plats populaires
 const popularMeals = [
@@ -103,7 +104,7 @@ export function Home() {
                 className="relative group hover:scale-[1.02] transition-all duration-300 border-b-4 border-transparent group-hover:border-yellow"
               >
                 <MealCard 
-                  meal={meal} 
+                  meal={meal as Meal} 
                   chef={sampleChefs[meal.chefId as keyof typeof sampleChefs]}
                 />
               </div>
