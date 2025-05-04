@@ -13,7 +13,7 @@ import { Footer } from './components/layout/Footer';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white flex flex-col">
+      <div className="min-h-screen bg-[#FFF9EF] flex flex-col">
         <Header />
         <main className="flex-grow">
           <Routes>
