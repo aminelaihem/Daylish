@@ -129,7 +129,7 @@ export function Home() {
       </section>
 
       {/* Section Appel à l'Action - Chef */}
-      <section className="py-24 relative overflow-hidden">
+      <section className="pb-24 relative overflow-hidden bg-[#FFF9EF]">
         <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
