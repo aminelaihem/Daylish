@@ -123,9 +123,9 @@ export function MealCard({ meal, chef }: MealCardProps) {
           </div>
 
           {meal.allergens.length > 0 && (
-            <div className="flex items-center text-xs text-orange mb-4">
-              <AlertCircle className="h-4 w-4 mr-1.5 flex-shrink-0" />
-              <span className="font-medium">Allergènes:</span>
+            <div className="flex items-center text-xs text-deep-green/70 mb-4">
+              <AlertCircle className="h-4 w-4 mr-1.5 flex-shrink-0 text-deep-green/70" />
+              <span className="font-medium">Allergènes :</span>
               <span className="ml-1 truncate">{meal.allergens.join(', ')}</span>
             </div>
           )}
