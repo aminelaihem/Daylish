@@ -89,14 +89,14 @@ export function Home() {
         <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="flex justify-between items-center mb-16">
+          <div className="flex justify-between items-center mb-6">
             <h2 className="section-title text-deep-green text-left relative" style={{ color: '#053126' }}>
               Les pépites du quartier
               <span className="absolute -bottom-2 left-0 w-24 h-1 bg-yellow rounded-full" />
             </h2>
             <Link 
               to="/catalogue" 
-              className="text-deep-green-light font-blatant-bold hover:underline flex items-center group flex-shrink-0 ml-6"
+              className="hidden md:flex text-deep-green-light font-blatant-bold hover:underline items-center group flex-shrink-0 ml-6"
             >
               Voir tous les plats
               <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -115,6 +115,15 @@ export function Home() {
                 />
               </div>
             ))}
+          </div>
+          <div className="flex justify-end mt-8 md:hidden">
+            <Link 
+              to="/catalogue" 
+              className="text-deep-green-light font-blatant-bold hover:underline flex items-center group"
+            >
+              Voir tous les plats
+              <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </div>
       </section>
