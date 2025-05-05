@@ -29,9 +29,9 @@ export function Login() {
       // Simuler un utilisateur connecté
       const fakeUser = {
         id: '1',
-        name: 'Jean Dupont',
+        name: 'Amine LAIHEM',
         email: form.email,
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
+        avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
         role: 'consumer'
       };
 

@@ -54,7 +54,7 @@ export function Register() {
         id: '1',
         name: form.name,
         email: form.email,
-        avatar: form.avatar ? URL.createObjectURL(form.avatar) : 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
+        avatar: form.avatar ? URL.createObjectURL(form.avatar) : 'https://randomuser.me/api/portraits/men/32.jpg',
         role: form.userType
       };
 
@@ -292,7 +292,7 @@ export function Register() {
                   <input
                     type="text"
                     required
-                    placeholder="Jean Dupont"
+                    placeholder="Amine LAIHEM"
                     className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                     value={form.name}
                     onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
@@ -308,7 +308,7 @@ export function Register() {
                   <input
                     type="email"
                     required
-                    placeholder="jean.dupont@example.com"
+                    placeholder="amine.laihem@example.com"
                     className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                     value={form.email}
                     onChange={(e) => setForm(prev => ({ ...prev, email: e.target.value }))}
