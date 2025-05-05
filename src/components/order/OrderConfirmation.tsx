@@ -115,7 +115,7 @@ const QuantitySelector = ({ quantity, setQuantity, maxQuantity }: { quantity: nu
 
 const PriceBreakdown = ({ meal, price, quantity }: { meal: Meal, price: number, quantity: number }) => {
   const subtotal = price * quantity;
-  const serviceFee = 0.99;
+  const serviceFee = subtotal * 0.10;
   const total = subtotal + serviceFee;
 
   return (
