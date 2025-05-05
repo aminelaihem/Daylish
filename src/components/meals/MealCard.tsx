@@ -16,11 +16,11 @@ export function MealCard({ meal, chef }: MealCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOrderClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Empêche l'ouverture de la modale lors du clic sur le bouton commander
+    e.stopPropagation();
     if (!isLoggedIn) {
-      localStorage.setItem('lastAttemptedOrder', JSON.stringify({ mealId: meal.id }));
+      localStorage.setItem('lastAttemptedOrder', JSON.stringify({ mealId: meal.id, meal, chef }));
       navigate('/login', {
-        state: { 
+        state: {
           message: "Connectez-vous pour commander ce délicieux plat !",
           redirectAfter: true
         }

@@ -42,9 +42,9 @@ export function Login() {
       // Vérifier s'il y avait une tentative de commande
       const lastAttemptedOrder = localStorage.getItem('lastAttemptedOrder');
       if (lastAttemptedOrder) {
-        const { mealId } = JSON.parse(lastAttemptedOrder);
+        const { mealId, meal, chef } = JSON.parse(lastAttemptedOrder);
         localStorage.removeItem('lastAttemptedOrder');
-        navigate(`/order/${mealId}`);
+        navigate(`/order/${mealId}`, { state: { meal, chef } });
       } else {
         navigate('/profile');
       }

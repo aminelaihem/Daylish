@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { User, ChefHat, Upload, X, ArrowLeft, Check } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Location } from '../../types/index';
 
@@ -20,7 +20,9 @@ interface RegisterForm {
 }
 
 export function Register() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState<RegisterForm>({
     userType: null,
     name: '',
@@ -40,6 +42,39 @@ export function Register() {
     specialties: [],
     experience: ''
   });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Simulation d'un délai d'appel API
+    setTimeout(() => {
+      // Simuler un utilisateur inscrit
+      const newUser = {
+        id: '1',
+        name: form.name,
+        email: form.email,
+        avatar: form.avatar ? URL.createObjectURL(form.avatar) : 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
+        role: form.userType
+      };
+
+      // Stocker les infos utilisateur dans localStorage
+      localStorage.setItem('user', JSON.stringify(newUser));
+      localStorage.setItem('isLoggedIn', 'true');
+
+      // Vérifier s'il y avait une tentative de commande
+      const lastAttemptedOrder = localStorage.getItem('lastAttemptedOrder');
+      if (lastAttemptedOrder) {
+        const { mealId, meal, chef } = JSON.parse(lastAttemptedOrder);
+        localStorage.removeItem('lastAttemptedOrder');
+        navigate(`/order/${mealId}`, { state: { meal, chef } });
+      } else {
+        navigate('/profile');
+      }
+
+      setIsLoading(false);
+    }, 1000);
+  };
 
   // Étape 1 : Choix du type d'utilisateur
   if (step === 1) {
@@ -246,10 +281,7 @@ export function Register() {
               }
             </motion.p>
 
-            <form className="space-y-6" onSubmit={(e) => {
-              e.preventDefault();
-              setStep(3);
-            }}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
