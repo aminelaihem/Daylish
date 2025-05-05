@@ -133,25 +133,32 @@ export function Home() {
         <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="bg-gradient-to-br from-deep-green to-deep-green/90 rounded-2xl shadow-2xl px-8 py-16 md:p-16 text-center relative overflow-hidden">
+          <div className="bg-gradient-to-br from-deep-green to-deep-green/90 rounded-2xl shadow-2xl px-8 py-16 md:p-16 relative overflow-hidden">
             {/* Effet de fond animé */}
             <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
-            
-            <h2 className="text-4xl md:text-5xl font-blatant-bold text-beige mb-6 relative">
-              Partagez votre passion culinaire
-            </h2>
-            <p className="text-xl text-beige/90 font-blatant mb-12 max-w-2xl mx-auto leading-relaxed relative">
-              Rejoignez notre réseau de chefs passionnés et transformez votre cuisine en source de revenus et de rencontres.
-            </p>
-            <Link
-              to="/register"
-              className="group relative inline-flex items-center justify-center font-bold font-sans rounded-xl overflow-hidden bg-[#FFEDCB] text-deep-green shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:ring-2 focus:ring-deep-green-light hover:bg-[#FFEDCB] px-[100px] py-[12px] text-lg"
-            >
-              {/* Effet Shimmer */}
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#FFEDCB]/60 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out opacity-50 group-hover:opacity-100"></span>
-              <ChefHat className="mr-3 h-5 w-5 text-deep-green transition-transform duration-300 group-hover:rotate-[-12deg] relative z-10" />
-              <span className="relative z-10">Devenir Chef Partenaire</span>
-            </Link>
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+              <div className="flex-1 w-full">
+                <div className="flex flex-col items-center text-center">
+                  <h2 className="text-4xl md:text-5xl font-blatant-bold text-beige mb-3 md:mb-0 relative">
+                    Partagez votre passion culinaire
+                  </h2>
+                  <p className="text-xl text-beige/90 font-blatant mb-6 max-w-2xl mx-auto leading-relaxed relative">
+                    Rejoignez notre réseau de chefs passionnés et transformez votre cuisine en source de revenus et de rencontres.
+                  </p>
+                  <div className="flex justify-center w-full mt-2">
+                    <Link
+                      to="/register"
+                      className="group relative inline-flex items-center justify-center font-bold font-sans rounded-xl overflow-hidden bg-[#FFEDCB] text-deep-green shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:ring-2 focus:ring-deep-green-light hover:bg-[#FFEDCB] px-[32px] py-[12px] text-lg"
+                    >
+                      {/* Effet Shimmer */}
+                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#FFEDCB]/60 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out opacity-50 group-hover:opacity-100"></span>
+                      <ChefHat className="mr-3 h-5 w-5 text-deep-green transition-transform duration-300 group-hover:rotate-[-12deg] relative z-10" />
+                      <span className="relative z-10 whitespace-nowrap">Devenir Chef Partenaire</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
